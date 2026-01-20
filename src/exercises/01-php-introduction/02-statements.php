@@ -27,6 +27,17 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
+        $age = 20;
+        echo"Age = $age". "<br>";
+        if($age <= 12){
+            echo"This is Child";
+        } else if($age <= 19){
+            echo "This is Teenager";
+        }else if($age <= 64){
+            echo "This is Adult";
+        } else{
+            echo "This is Senior";
+        }
         ?>
     </div>
 
@@ -43,6 +54,16 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
+        $day = 5;
+        echo "Number $day"."<br>";
+        switch(true){
+            case ($day <= 5 ):
+                echo "This is Weekday";
+                break;
+                case ($day <= 7):
+                    echo "This is Weekend";
+                    break;
+        }
         ?>
     </div>
 
@@ -58,6 +79,12 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
+            for ($i=0; $i < 10 ; $i++) { 
+                if($i == 3 || $i == 6){
+            echo"<br>";
+            }
+            echo" $i";
+        }
         ?>
     </div>
 
@@ -73,6 +100,12 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
+        $blast = 10;
+        while ($blast != 0){
+            echo "$blast" . "<br>";
+            $blast = $blast - 1;
+        }   
+        echo"Blast off";
         ?>
     </div>
 
