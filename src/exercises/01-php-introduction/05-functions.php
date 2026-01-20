@@ -47,24 +47,18 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
-        function calculateRectangleArea($width , $height ){
-            if( $width == $height ){
-                $square = $width * $width;
-                echo"Square area is $square";
-                
-            }
-            if( $width != $height ){
-            $rectangle = $width * $height;
-            echo"Rectangle area is $rectangle";
+        function calculateRectangleArea($width , $height = "none" ){
+
+            if( $height === "none"){
+                $height = $width;
             }
 
             $result = $width * $height;
-             echo"Area is $rectangle";
+            echo"Area is $result";
             
-
         }
         calculateRectangleArea(20,height: 50);
-    
+        calculateRectangleArea(20)
 
         ?>
     </div>
