@@ -80,10 +80,9 @@
         <?php
         // TODO: Write your solution here
             for ($i=0; $i < 10 ; $i++) { 
-                if($i == 3 || $i == 6){
-            echo"<br>";
-            }
-            echo" $i";
+                $numT = ($i + 1);
+                $sum = $i * ($i + 1);
+            echo" $i * $numT = $sum" . "<br>";
         }
         ?>
     </div>
