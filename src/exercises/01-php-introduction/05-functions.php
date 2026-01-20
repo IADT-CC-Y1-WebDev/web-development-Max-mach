@@ -25,6 +25,12 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
+        function celsiusToFahrenheit($c){
+            echo"Celsius temperature = $c". "<br>";
+            $formula = ($c * 9/5) + 32;
+            echo"Fahrenheit equivalent = $formula";
+        }
+        celsiusToFahrenheit(3)
         ?>
     </div>
 
@@ -41,6 +47,25 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
+        function calculateRectangleArea($width , $height ){
+            if( $width == $height ){
+                $square = $width * $width;
+                echo"Square area is $square";
+                
+            }
+            if( $width != $height ){
+            $rectangle = $width * $height;
+            echo"Rectangle area is $rectangle";
+            }
+
+            $result = $width * $height;
+             echo"Area is $rectangle";
+            
+
+        }
+        calculateRectangleArea(20,height: 50);
+    
+
         ?>
     </div>
 
