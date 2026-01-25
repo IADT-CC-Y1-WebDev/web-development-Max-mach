@@ -54,7 +54,7 @@
             }
 
             $result = $width * $height;
-            echo"Area is $result";
+            echo"Area is $result" . "<br>";
             
         }
         calculateRectangleArea(20,height: 50);
@@ -76,6 +76,15 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
+        function checkEvenOdd($number){
+            if($number %2== 0){
+                echo"It is the even number" . "<br>";
+        } else {
+            echo"It is the odd number" . "<br>";
+        }
+    }
+    checkEvenOdd(67);
+    checkEvenOdd(60);
         ?>
     </div>
 
@@ -92,6 +101,16 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
+        function getArrayStats(){
+            $array = [20,30,40,50,60,70,80];
+             $average = count($array);
+            for ($i=0; $i < count($array); $i++) {
+                if($average <=$i){$plusoall = $array[$i] + $array[$i + 1];}            
+            }
+            $final = $plusoall / $average; 
+            echo"$final ";
+        }
+        getArrayStats()
         ?>
     </div>
 
