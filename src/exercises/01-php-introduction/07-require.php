@@ -23,14 +23,11 @@
         <?php
         // TODO: Write your solution here
     //    require 'inc/footer.php';
-        require '/src/navigation.php'
+        // require '/src/navigation.php'
+        require __DIR__ . '/inc/navigation.php';
+        require __DIR__ . '/inc/navigation.php';
         ?>
-        <!-- <ul class="navigation">
-            <li><a href="https://webflow.com/made-in-webflow/website/svg-map"></a></li>
-            <li><a href="https://webflow.com/made-in-webflow/website/svg-map"></a></li>
-            <li><a href="https://webflow.com/made-in-webflow/website/svg-map"></a></li>
-            <li><a href="https://webflow.com/made-in-webflow/website/svg-map"></a></li>
-        </ul> -->
+       
     </div>
 
     <!-- Exercise 2 -->
@@ -41,6 +38,7 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
+        require_once __DIR__ . '/lib/utilities.php'
         ?>
     </div>
 
@@ -52,6 +50,9 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
+        require_once __DIR__ . '/lib/validators.php';
+        require_once __DIR__ . '/lib/formatters.php';
+        
         ?>
     </div>
 
