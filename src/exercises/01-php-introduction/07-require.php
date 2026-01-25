@@ -22,7 +22,15 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
+    //    require 'inc/footer.php';
+        require '/src/navigation.php'
         ?>
+        <!-- <ul class="navigation">
+            <li><a href="https://webflow.com/made-in-webflow/website/svg-map"></a></li>
+            <li><a href="https://webflow.com/made-in-webflow/website/svg-map"></a></li>
+            <li><a href="https://webflow.com/made-in-webflow/website/svg-map"></a></li>
+            <li><a href="https://webflow.com/made-in-webflow/website/svg-map"></a></li>
+        </ul> -->
     </div>
 
     <!-- Exercise 2 -->

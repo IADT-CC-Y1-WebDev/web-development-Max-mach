@@ -103,13 +103,17 @@
         // TODO: Write your solution here
         function getArrayStats(){
             $array = [20,30,40,50,60,70,80];
-             $average = count($array);
-            for ($i=0; $i < count($array); $i++) {
-                if($average <=$i){$plusoall = $array[$i] + $array[$i + 1];}            
+            print_r($array) ;
+            $sum = 0;
+            echo "<br> minimum: " . (min($array)) . "<br>";
+            echo "maximum: " . (max($array)) . "<br>";
+            for ($i=0; $i < count($array); $i++) { 
+                $sum += $array[$i];
+                
             }
-            $final = $plusoall / $average; 
-            echo"$final ";
-        }
+            $average = $sum / count($array);
+            echo "average: " . "$average";   
+            }
         getArrayStats()
         ?>
     </div>
