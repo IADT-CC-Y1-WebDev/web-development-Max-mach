@@ -35,6 +35,12 @@
         // Step 2: Require the file
         // require_once __DIR__ . '/classes/Student.php';
         // Step 3: Create a student and display their details
+        require_once __DIR__ .'/classes/Student.php';
+        $student = new Student("Max", 12412414);
+        //  $student->name = "Max";
+        // $student->number = "999292992";
+          echo "Student name: " . $student->name . "<br>";
+        echo "Student number: " . $student->number;
         ?>
     </div>
 
@@ -55,6 +61,12 @@
         <?php
         // TODO: Write your solution here
         // require_once __DIR__ . '/classes/Student.php';
+        require_once __DIR__ .'/classes/Student.php';
+        $account = new Student("Bob", 1214124124);
+        $accountO = new Student("Alin", 1214124);
+        echo "Student name: " . $account->name . "<br>". "Student number:  " . $account->number . "<br>";
+        echo "Student name: " . $accountO->name . "<br>". "Student number:  " . $accountO->number . "<br>";
+        // echo "Student name: " . $accountO->name . "Student number" . $accountO->$number . "<br>";
         ?>
     </div>
 
@@ -75,6 +87,16 @@
         <?php
         // TODO: Write your solution here
         // require_once __DIR__ . '/classes/Student.php';
+        require_once __DIR__ .'/classes/Student.php';
+        $account = new Student("Bob", 1214124124);
+        $accountO = new Student("Alin", 1214124);
+        $account->getName("Bary");
+        $account->getNumber(967844);
+        $accountO->getName("Bobr");
+        $accountO->getNumber(45678390);
+        echo"Student " . $account->name . " has number: ". $account->number . "<br>";
+        echo"Student " . $accountO->name . " has number: ". $accountO->number . "<br>";
+
         ?>
     </div>
 
