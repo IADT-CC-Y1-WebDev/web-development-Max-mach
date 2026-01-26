@@ -39,8 +39,8 @@
         $student = new Student("Max", 12412414);
         //  $student->name = "Max";
         // $student->number = "999292992";
-          echo "Student name: " . $student->name . "<br>";
-        echo "Student number: " . $student->number;
+        echo "Student name: " . $student->getName() . "<br>";
+        echo "Student number: " . $student->getNumber();
         ?>
     </div>
 
@@ -64,8 +64,8 @@
         require_once __DIR__ .'/classes/Student.php';
         $account = new Student("Bob", 1214124124);
         $accountO = new Student("Alin", 1214124);
-        echo "Student name: " . $account->name . "<br>". "Student number:  " . $account->number . "<br>";
-        echo "Student name: " . $accountO->name . "<br>". "Student number:  " . $accountO->number . "<br>";
+        echo "Student name: " . $account->getName() . "<br>". "Student number:  " . $account->getNumber() . "<br>";
+        echo "Student name: " . $accountO->getName() . "<br>". "Student number:  " . $accountO->getNumber() . "<br>";
         // echo "Student name: " . $accountO->name . "Student number" . $accountO->$number . "<br>";
         ?>
     </div>
@@ -90,12 +90,8 @@
         require_once __DIR__ .'/classes/Student.php';
         $account = new Student("Bob", 1214124124);
         $accountO = new Student("Alin", 1214124);
-        $account->getName("Bary");
-        $account->getNumber(967844);
-        $accountO->getName("Bobr");
-        $accountO->getNumber(45678390);
-        echo"Student " . $account->name . " has number: ". $account->number . "<br>";
-        echo"Student " . $accountO->name . " has number: ". $accountO->number . "<br>";
+        echo"Student " .$account->setName("Bary") . " has number: ".  $account->setNumber(967844) . "<br>";
+        echo"Student " . $accountO->setName("Bobr") . " has number: ". $accountO->setNumber(45678390) . "<br>";
 
         ?>
     </div>

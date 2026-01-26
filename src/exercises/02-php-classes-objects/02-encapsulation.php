@@ -56,6 +56,9 @@
         <?php
         // TODO: Write your solution here
         // require_once __DIR__ . '/classes/Student.php';
+        require_once __DIR__ .'/classes/Student.php';
+        $student = new Student("Jack", 124242142);
+        echo"Student " . $student->getName() . " has number " . $student->getNumber();
         ?>
     </div>
 
@@ -82,6 +85,14 @@
         // } catch (Exception $e) {
         //     echo "Error: " . $e->getMessage();
         // }
+        require_once __DIR__ .'/classes/Student.php';
+          // try {
+        //     $student = new Student("Alice", "");
+        // } catch (Exception $e) {
+        //     echo "Error: " . $e->getMessage();
+        // }
+        $student = new Student("", 1124124);
+        echo "Student" . $student->getName();
         ?>
     </div>
 
