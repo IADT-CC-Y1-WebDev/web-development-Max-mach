@@ -38,6 +38,9 @@
         <?php
         // TODO: Write your solution here
         // require_once __DIR__ . '/classes/Undergrad.php';
+        require_once __DIR__ . '/classes/Undergrad.php';
+        $student = new SavingsAccount("Lory", 121234124,12412,4124124);
+        echo"Name ". $student->getName();
         ?>
     </div>
 
@@ -59,6 +62,9 @@
         <?php
         // TODO: Write your solution here
         // require_once __DIR__ . '/classes/Undergrad.php';
+        require_once __DIR__ . '/classes/Undergrad.php';
+        $student = new SavingsAccount("Morini", 121234124,"It",2004);
+        echo"Name: ". $student->getName() . " Number: " . $student->getNumber() . " Course: " . $student->getCourse() . " Year: " . $student->getYear();
         ?>
     </div>
 
@@ -76,6 +82,13 @@
         <?php
         // TODO: Write your solution here
         // require_once __DIR__ . '/classes/Undergrad.php';
+        require_once __DIR__ . '/classes/Undergrad.php';
+        $student = new SavingsAccount("Morini", 1241234124,"It",2004);
+        $studentOne = new SavingsAccount("Loti", 124234124,"Ge",2007);
+        $studentTwo = new SavingsAccount("Botit", 122434124,"PE",2000);
+        echo"Name: ". $student->getName() . " Number: " . $student->getNumber() . " Course: " . $student->getCourse() . " Year: " . $student->getYear() . "<br>";
+        echo"Name: ". $studentOne->getName() . " Number: " . $studentOne->getNumber() . " Course: " . $studentOne->getCourse() . " Year: " . $studentOne->getYear() . "<br>";
+        echo"Name: ". $studentTwo->getName() . " Number: " . $studentTwo->getNumber() . " Course: " . $studentTwo->getCourse() . " Year: " . $studentTwo->getYear();
         ?>
     </div>
 

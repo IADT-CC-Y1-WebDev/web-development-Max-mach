@@ -33,6 +33,12 @@
         <?php
         // TODO: Write your solution here
         // require_once __DIR__ . '/classes/Undergrad.php';
+        require_once __DIR__ . '/classes/Undergrad.php';
+        $studentZero = new Student('Nero',12412412895);
+        $studentOne = new SavingsAccount("Loti", 124234124,"Ge",2007);
+        echo $studentZero . "<br>";
+        echo $studentOne;
+        
         ?>
     </div>
 
@@ -61,6 +67,9 @@
         <?php
         // TODO: Write your solution here
         // require_once __DIR__ . '/classes/Postgrad.php';
+        require_once __DIR__ . '/classes/Postgrad.php';
+        $postgrad = new postograf('Biliki',124124124,'Communication',"work");
+        echo "Postgrad: {$postgrad->getName()} {$postgrad->getNumber()}, Supervisor: {$postgrad->getSupervisor()}, Topic: {$postgrad->getTopic()}"
         ?>
     </div>
 
@@ -79,6 +88,15 @@
         // TODO: Write your solution here
         // require_once __DIR__ . '/classes/Undergrad.php';
         // require_once __DIR__ . '/classes/Postgrad.php';
+         require_once __DIR__ . '/classes/Undergrad.php';
+        require_once __DIR__ . '/classes/Postgrad.php';
+        $postgrad = new postograf('Biliki',124124124,'Communication',"work");
+         $studentZero = new Student('Nero',12412412895);
+        $studentOne = new SavingsAccount("Loti", 124234124,"Ge",2007);
+        $all = [ $postgrad,$studentZero,$studentOne];
+        for ($i=0; $i < count($all); $i++) { 
+            echo $all[$i] ;
+        }
         ?>
     </div>
 

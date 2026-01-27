@@ -3,6 +3,7 @@ class Student {
     protected $name;
     protected $number;
     public function __construct($name, $number) {
+        echo"Creating student: $name" . "<br>";
         $this->name = $name;
         $this->number = $number;
         if($number == ""){
@@ -13,6 +14,13 @@ class Student {
             throw new Exception("Student name cannot be empty");
             
         }
+    }
+    public function __toString(){
+        $format = "Student: %s, Number %s" . "<br>";
+        return sprintf($format,$this->name, $this->number);
+    }
+    public function __destruct() {
+        echo "Student {$this->name} has left the system"."<br>";
     }
     public function getName() {
         return $this->name;
