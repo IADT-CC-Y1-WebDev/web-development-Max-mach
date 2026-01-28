@@ -37,6 +37,13 @@
         <?php
         // TODO: Write your solution here
         // require_once __DIR__ . '/classes/Student.php';
+         require_once __DIR__ . '/classes/Student.php';
+        $studentO = new Student("llopi",124124);
+        echo $studentO . "Count " . Student::getCount() . "<br>";
+        $studentT = new Student( "Bpi",11242124);
+        echo $studentT . "Count " . Student::getCount() . "<br>";
+        $studentTh = new Student("Lopi",124124);
+        echo $studentTh . "Count " . Student::getCount();
         ?>
     </div>
 

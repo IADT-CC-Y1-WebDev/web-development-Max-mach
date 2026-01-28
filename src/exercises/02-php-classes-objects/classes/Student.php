@@ -2,8 +2,12 @@
 class Student {
     protected $name;
     protected $number;
+     private static $students = [];
+    private static $count = 0;
     public function __construct($name, $number) {
-        echo"Creating student: $name" . "<br>";
+        // echo"Creating student: $name" . "<br>";
+        self::$count++;
+        self::$students;
         $this->name = $name;
         $this->number = $number;
         if($number == ""){
@@ -14,6 +18,9 @@ class Student {
             throw new Exception("Student name cannot be empty");
             
         }
+    }
+    public static function getCount(){
+        return self::$count;
     }
     public function __toString(){
         $format = "Student: %s, Number %s" . "<br>";
