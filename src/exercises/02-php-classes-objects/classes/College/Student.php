@@ -1,4 +1,12 @@
 <?php
+namespace College;
+// spl_autoload_register(function ($class) {
+//     $path = str_replace("\\", DIRECTORY_SEPARATOR, $class);
+//     $file = __DIR__ . '/../class/../College' . $path . '.php';
+//     if (file_exists($file)) {
+//         require_once $file;
+//     }
+// });
 class Student
 {
     protected $name;
@@ -23,6 +31,7 @@ class Student
 
 
     }
+
     public static function getCount()
     {
         // return self::$count;

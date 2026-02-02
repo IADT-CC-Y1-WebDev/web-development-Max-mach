@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inheritance Exercises - PHP Classes &amp; Objects</title>
     <link rel="stylesheet" href="/exercises/css/style.css">
 </head>
+
 <body>
     <div class="back-link">
         <a href="index.php">&larr; Back to Classes &amp; Objects</a>
@@ -14,7 +16,8 @@
 
     <h1>Inheritance Exercises</h1>
 
-    <p><strong>Note:</strong> These exercises build on your <code>classes/Student.php</code> file. Make sure your Student class has <code>protected</code> properties so child classes can access them.</p>
+    <p><strong>Note:</strong> These exercises build on your <code>classes/Student.php</code> file. Make sure your
+        Student class has <code>protected</code> properties so child classes can access them.</p>
 
     <!-- Exercise 1 -->
     <h2>Exercise 1: Create an Undergrad Class</h2>
@@ -27,7 +30,9 @@
         <li>Use <code>require_once</code> to include <code>Student.php</code></li>
         <li>Extend the <code>Student</code> class</li>
         <li>Add two protected properties: <code>$course</code> and <code>$year</code></li>
-        <li>Have a constructor that accepts all four values (name, number, course, year) and calls <code>parent::__construct()</code></li>
+        <li>Have a constructor that accepts all four values (name, number, course, year) and calls
+            <code>parent::__construct()</code>
+        </li>
     </ul>
     <p>
         Create an Undergrad student and display their name using the inherited <code>getName()</code> method.
@@ -39,8 +44,8 @@
         // TODO: Write your solution here
         // require_once __DIR__ . '/classes/Undergrad.php';
         require_once __DIR__ . '/classes/Undergrad.php';
-        $student = new SavingsAccount("Lory", 121234124,12412,4124124);
-        echo"Name ". $student->getName();
+        $student = new Undergrad("Lory", 121234124, 12412, 4124124);
+        echo "Name " . $student->getName();
         ?>
     </div>
 
@@ -63,8 +68,8 @@
         // TODO: Write your solution here
         // require_once __DIR__ . '/classes/Undergrad.php';
         require_once __DIR__ . '/classes/Undergrad.php';
-        $student = new SavingsAccount("Morini", 121234124,"It",2004);
-        echo"Name: ". $student->getName() . " Number: " . $student->getNumber() . " Course: " . $student->getCourse() . " Year: " . $student->getYear();
+        $student = new Undergrad("Morini", 121234124, "It", 2004);
+        echo "Name: " . $student->getName() . " Number: " . $student->getNumber() . " Course: " . $student->getCourse() . " Year: " . $student->getYear();
         ?>
     </div>
 
@@ -83,14 +88,15 @@
         // TODO: Write your solution here
         // require_once __DIR__ . '/classes/Undergrad.php';
         require_once __DIR__ . '/classes/Undergrad.php';
-        $student = new SavingsAccount("Morini", 1241234124,"It",2004);
-        $studentOne = new SavingsAccount("Loti", 124234124,"Ge",2007);
-        $studentTwo = new SavingsAccount("Botit", 122434124,"PE",2000);
-        echo"Name: ". $student->getName() . " Number: " . $student->getNumber() . " Course: " . $student->getCourse() . " Year: " . $student->getYear() . "<br>";
-        echo"Name: ". $studentOne->getName() . " Number: " . $studentOne->getNumber() . " Course: " . $studentOne->getCourse() . " Year: " . $studentOne->getYear() . "<br>";
-        echo"Name: ". $studentTwo->getName() . " Number: " . $studentTwo->getNumber() . " Course: " . $studentTwo->getCourse() . " Year: " . $studentTwo->getYear();
+        $student = new Undergrad("Morini", 1241234124, "It", 2004);
+        $studentOne = new Undergrad("Loti", 124234124, "Ge", 2007);
+        $studentTwo = new Undergrad("Botit", 122434124, "PE", 2000);
+        echo "Name: " . $student->getName() . " Number: " . $student->getNumber() . " Course: " . $student->getCourse() . " Year: " . $student->getYear() . "<br>";
+        echo "Name: " . $studentOne->getName() . " Number: " . $studentOne->getNumber() . " Course: " . $studentOne->getCourse() . " Year: " . $studentOne->getYear() . "<br>";
+        echo "Name: " . $studentTwo->getName() . " Number: " . $studentTwo->getNumber() . " Course: " . $studentTwo->getCourse() . " Year: " . $studentTwo->getYear();
         ?>
     </div>
 
 </body>
+
 </html>

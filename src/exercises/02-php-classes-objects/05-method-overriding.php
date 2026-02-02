@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Method Overriding Exercises - PHP Classes &amp; Objects</title>
     <link rel="stylesheet" href="/exercises/css/style.css">
 </head>
+
 <body>
     <div class="back-link">
         <a href="index.php">&larr; Back to Classes &amp; Objects</a>
@@ -14,7 +16,9 @@
 
     <h1>Method Overriding Exercises</h1>
 
-    <p><strong>Note:</strong> These exercises build on your <code>classes/Student.php</code> and <code>classes/Undergrad.php</code> files.</p>
+    <p><strong>Note:</strong> These exercises build on your <code>classes/Student.php</code> and
+        <code>classes/Undergrad.php</code> files.
+    </p>
 
     <!-- Exercise 1 -->
     <h2>Exercise 1: Override __toString() in Undergrad</h2>
@@ -34,11 +38,11 @@
         // TODO: Write your solution here
         // require_once __DIR__ . '/classes/Undergrad.php';
         require_once __DIR__ . '/classes/Undergrad.php';
-        $studentZero = new Student('Nero',12412412895);
-        $studentOne = new SavingsAccount("Loti", 124234124,"Ge",2007);
+        $studentZero = new Student('Nero', 12412412895);
+        $studentOne = new Undergrad("Loti", 124234124, "Ge", 2007);
         echo $studentZero . "<br>";
         echo $studentOne;
-        
+
         ?>
     </div>
 
@@ -55,7 +59,8 @@
         <li>Add two protected properties: <code>$supervisor</code> and <code>$topic</code></li>
         <li>Have a constructor that accepts all four values and calls <code>parent::__construct()</code></li>
         <li>Have getter methods for supervisor and topic</li>
-        <li>Override <code>__toString()</code> to return "Postgrad: [name] ([number]), Supervisor: [supervisor], Topic: [topic]"</li>
+        <li>Override <code>__toString()</code> to return "Postgrad: [name] ([number]), Supervisor: [supervisor], Topic:
+            [topic]"</li>
     </ul>
     <p>
         Create a Postgrad object and echo it to see the output from your overridden
@@ -68,9 +73,9 @@
         // TODO: Write your solution here
         // require_once __DIR__ . '/classes/Postgrad.php';
         require_once __DIR__ . '/classes/Postgrad.php';
-        $postgrad = new postograf('Biliki',124124124,'Communication',"work");
+        $postgrad = new Postgrad('Biliki', 124124124, 'Communication', "work");
         echo "Postgrad: {$postgrad->getName()} {$postgrad->getNumber()}, Supervisor: {$postgrad->getSupervisor()}, Topic: {$postgrad->getTopic()}"
-        ?>
+            ?>
     </div>
 
     <!-- Exercise 3 -->
@@ -88,17 +93,18 @@
         // TODO: Write your solution here
         // require_once __DIR__ . '/classes/Undergrad.php';
         // require_once __DIR__ . '/classes/Postgrad.php';
-         require_once __DIR__ . '/classes/Undergrad.php';
+        require_once __DIR__ . '/classes/Undergrad.php';
         require_once __DIR__ . '/classes/Postgrad.php';
-        $postgrad = new postograf('Biliki',124124124,'Communication',"work");
-         $studentZero = new Student('Nero',12412412895);
-        $studentOne = new SavingsAccount("Loti", 124234124,"Ge",2007);
-        $all = [ $postgrad,$studentZero,$studentOne];
-        for ($i=0; $i < count($all); $i++) { 
-            echo $all[$i] ;
+        $postgrad = new Postgrad('Biliki', 124124124, 'Communication', "work");
+        $studentZero = new Student('Nero', 12412412895);
+        $studentOne = new Undergrad("Loti", 124234124, "Ge", 2007);
+        $all = [$postgrad, $studentZero, $studentOne];
+        for ($i = 0; $i < count($all); $i++) {
+            echo $all[$i];
         }
         ?>
     </div>
 
 </body>
+
 </html>

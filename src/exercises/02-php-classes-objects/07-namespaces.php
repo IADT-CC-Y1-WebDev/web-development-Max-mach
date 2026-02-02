@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Namespaces Exercises - PHP Classes &amp; Objects</title>
     <link rel="stylesheet" href="/exercises/css/style.css">
 </head>
+
 <body>
     <div class="back-link">
         <a href="index.php">&larr; Back to Classes &amp; Objects</a>
@@ -14,7 +16,9 @@
 
     <h1>Namespaces Exercises</h1>
 
-    <p><strong>Note:</strong> In these exercises you will create namespaced versions of your classes in a new <code>College/</code> folder. The original classes in <code>classes/</code> will remain unchanged.</p>
+    <p><strong>Note:</strong> In these exercises you will create namespaced versions of your classes in a new
+        <code>College/</code> folder. The original classes in <code>classes/</code> will remain unchanged.
+    </p>
 
     <!-- Exercise 1 -->
     <h2>Exercise 1: Create the College Namespace</h2>
@@ -24,7 +28,9 @@
     <ol>
         <li>Create a new folder called <code>College</code> inside the <code>classes/</code> folder</li>
         <li>Copy your <code>Student.php</code> file into the <code>classes/College/</code> folder</li>
-        <li>Edit <code>classes/College/Student.php</code> to add <code>namespace College;</code> at the very top (after <code>&lt;?php</code>)</li>
+        <li>Edit <code>classes/College/Student.php</code> to add <code>namespace College;</code> at the very top (after
+            <code>&lt;?php</code>)
+        </li>
     </ol>
     <p>
         Then use <code>require_once</code> to include the namespaced class and create a student
@@ -38,7 +44,11 @@
         // require_once __DIR__ . '/classes/College/Student.php';
         // $student = new \College\Student("Alice", "C12345");
         // echo $student;
-        ?>
+        require_once __DIR__ . '/classes/College/Student.php';
+        $student = new \College\Student("Alice", "C12345");
+        echo $student
+
+            ?>
     </div>
 
     <!-- Exercise 2 -->
@@ -58,7 +68,11 @@
         // use College\Student;
         // $student = new Student("Bob", "C12346");
         // echo $student;
-        ?>
+        require_once __DIR__ . '/classes/College/Student.php';
+        use College\Student as CollegeStu;
+        $student = new CollegeStu("Lice", "D12345");
+        echo $student
+            ?>
     </div>
 
     <!-- Exercise 3 -->
@@ -67,7 +81,8 @@
         <strong>Task:</strong>
     </p>
     <ol>
-        <li>Copy <code>Undergrad.php</code> and <code>Postgrad.php</code> into the <code>classes/College/</code> folder</li>
+        <li>Copy <code>Undergrad.php</code> and <code>Postgrad.php</code> into the <code>classes/College/</code> folder
+        </li>
         <li>Add <code>namespace College;</code> to each file</li>
     </ol>
     <p>
@@ -85,8 +100,21 @@
         // use College\Student;
         // use College\Undergrad;
         // use College\Postgrad;
-        ?>
+        require_once __DIR__ . '/classes/College/Student.php';
+        require_once __DIR__ . '/classes/College/Undergrad.php';
+        require_once __DIR__ . '/classes/College/Postgrad.php';
+        use College\Student;
+        use College\Undergrad;
+        use College\Postgrad;
+        $postgrad = new Postgrad('Biliki', 124124124, 'Communication', "work");
+        $studentZero = new Student('Nero', 12412412895);
+        $studentOne = new Undergrad("Loti", 124234124, "Ge", 2007);
+        echo $postgrad . "<br>";
+        echo $studentZero . "<br>";
+        echo $studentOne . "<br>"
+            ?>
     </div>
 
 </body>
+
 </html>

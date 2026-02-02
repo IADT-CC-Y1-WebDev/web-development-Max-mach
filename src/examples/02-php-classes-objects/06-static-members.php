@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="/examples/css/style.css">
     <link rel="stylesheet" href="/examples/css/prism-tomorrow.min.css">
 </head>
+
 <body>
     <div class="back-link">
         <a href="index.php">&larr; Back to Classes &amp; Objects</a>
@@ -15,11 +17,13 @@
 
     <h1>Static Members</h1>
 
-    <p>Static properties and methods belong to the class itself, not to individual objects. They are shared across all instances and can be accessed without creating an object.</p>
+    <p>Static properties and methods belong to the class itself, not to individual objects. They are shared across all
+        instances and can be accessed without creating an object.</p>
 
     <!-- Example 1 -->
     <h2>Static Properties</h2>
-    <p>A static property is shared by all instances of a class. Use the <code>static</code> keyword to declare it, and <code>self::$property</code> to access it within the class.</p>
+    <p>A static property is shared by all instances of a class. Use the <code>static</code> keyword to declare it, and
+        <code>self::$property</code> to access it within the class.</p>
     <pre><code class="language-php">class Counter {
     private static $count = 0;
 
@@ -44,14 +48,17 @@ echo "Count: " . Counter::getCount();</code></pre>
     <p class="output-label">Output:</p>
     <div class="output">
         <?php
-        class Counter {
+        class Counter
+        {
             private static $count = 0;
 
-            public function __construct() {
+            public function __construct()
+            {
                 self::$count++;
             }
 
-            public static function getCount() {
+            public static function getCount()
+            {
                 return self::$count;
             }
         }
@@ -69,7 +76,8 @@ echo "Count: " . Counter::getCount();</code></pre>
 
     <!-- Example 2 -->
     <h2>Static Methods</h2>
-    <p>Static methods can be called without creating an object, using <code>ClassName::methodName()</code>. They cannot access <code>$this</code> because there is no instance.</p>
+    <p>Static methods can be called without creating an object, using <code>ClassName::methodName()</code>. They cannot
+        access <code>$this</code> because there is no instance.</p>
     <pre><code class="language-php">class MathHelper {
     public static function add($a, $b) {
         return $a + $b;
@@ -92,16 +100,20 @@ echo "20% of 150 = " . MathHelper::percentage(150, 20);</code></pre>
     <p class="output-label">Output:</p>
     <div class="output">
         <?php
-        class MathHelper {
-            public static function add($a, $b) {
+        class MathHelper
+        {
+            public static function add($a, $b)
+            {
                 return $a + $b;
             }
 
-            public static function multiply($a, $b) {
+            public static function multiply($a, $b)
+            {
                 return $a * $b;
             }
 
-            public static function percentage($amount, $percent) {
+            public static function percentage($amount, $percent)
+            {
                 return $amount * ($percent / 100);
             }
         }
@@ -114,7 +126,8 @@ echo "20% of 150 = " . MathHelper::percentage(150, 20);</code></pre>
 
     <!-- Example 3 -->
     <h2>Registry Pattern: Tracking All Objects</h2>
-    <p>A common use of static properties is to keep track of all created objects. This is called the Registry pattern.</p>
+    <p>A common use of static properties is to keep track of all created objects. This is called the Registry pattern.
+    </p>
     <pre><code class="language-php">class BankAccount {
     private static $accounts = [];  // Shared across all instances
 
@@ -163,14 +176,16 @@ echo $found;</code></pre>
     <p class="output-label">Output:</p>
     <div class="output">
         <?php
-        class BankAccountStatic {
+        class BankAccountStatic
+        {
             private static $accounts = [];
 
             protected $number;
             protected $name;
             protected $balance;
 
-            public function __construct($num, $name, $bal) {
+            public function __construct($num, $name, $bal)
+            {
                 $this->number = $num;
                 $this->name = $name;
                 $this->balance = $bal;
@@ -178,15 +193,18 @@ echo $found;</code></pre>
                 self::$accounts[$num] = $this;
             }
 
-            public static function findAll() {
+            public static function findAll()
+            {
                 return self::$accounts;
             }
 
-            public static function findByNumber($num) {
+            public static function findByNumber($num)
+            {
                 return self::$accounts[$num] ?? null;
             }
 
-            public function __toString() {
+            public function __toString()
+            {
                 return "Account {$this->number}: {$this->name}, &euro;{$this->balance}";
             }
         }
@@ -209,35 +227,35 @@ echo $found;</code></pre>
     <!-- Example 4 -->
     <h2>Removing Objects from the Registry</h2>
     <p>
-        When an object is destroyed, we should remove it from the registry to keep it accurate. 
+        When an object is destroyed, we should remove it from the registry to keep it accurate.
         You might think we could do this in <code>__destruct()</code>, but there's a problem.
     </p>
 
     <h3>Why __destruct() Alone Doesn't Work</h3>
     <p>
-        When you create an object and store it in a variable, that variable holds a 
+        When you create an object and store it in a variable, that variable holds a
         <strong>reference</strong> (like a bookmark) pointing to the object in memory:
     </p>
     <pre><code class="language-php">$acc = new BankAccount("111", "Alice", 100);
 // $acc now holds a reference to the Alice object</code></pre>
 
     <p>
-        When the constructor also adds <code>$this</code> to the static array, the array 
+        When the constructor also adds <code>$this</code> to the static array, the array
         holds a <strong>second reference</strong> to the same object:
     </p>
     <pre><code class="language-php">self::$accounts[$num] = $this;
 // Now BOTH $acc AND the array point to the Alice object</code></pre>
 
     <p>
-        PHP only calls <code>__destruct()</code> when <strong>all references</strong> to an 
-        object are gone. So if you call <code>unset($acc)</code>, you only remove one 
-        reference &mdash; the array still has its reference, so the object stays alive 
+        PHP only calls <code>__destruct()</code> when <strong>all references</strong> to an
+        object are gone. So if you call <code>unset($acc)</code>, you only remove one
+        reference &mdash; the array still has its reference, so the object stays alive
         and <code>__destruct()</code> is never called.
     </p>
 
     <p>
-        The solution is to add a <code>close()</code> method that removes the object from 
-        the array first. Then when you call <code>unset()</code>, the last reference is 
+        The solution is to add a <code>close()</code> method that removes the object from
+        the array first. Then when you call <code>unset()</code>, the last reference is
         removed and <code>__destruct()</code> is finally called.
     </p>
     <pre><code class="language-php">class BankAccount {
@@ -300,14 +318,16 @@ foreach (BankAccount::findAll() as $account) {
     <p class="output-label">Output:</p>
     <div class="output">
         <?php
-        class BankAccountWithDestruct {
+        class BankAccountWithDestruct
+        {
             private static $accounts = [];
 
             protected $number;
             protected $name;
             protected $balance;
 
-            public function __construct($num, $name, $bal) {
+            public function __construct($num, $name, $bal)
+            {
                 $this->number = $num;
                 $this->name = $name;
                 $this->balance = $bal;
@@ -316,24 +336,29 @@ foreach (BankAccount::findAll() as $account) {
                 echo "Opened account for {$this->name}<br>";
             }
 
-            public function close() {
+            public function close()
+            {
                 unset(self::$accounts[$this->number]);
                 echo "Account closed for {$this->name}<br>";
             }
 
-            public function __destruct() {
+            public function __destruct()
+            {
                 echo "Account destroyed for {$this->name}<br>";
             }
 
-            public static function findAll() {
+            public static function findAll()
+            {
                 return self::$accounts;
             }
 
-            public static function count() {
+            public static function count()
+            {
                 return count(self::$accounts);
             }
 
-            public function __toString() {
+            public function __toString()
+            {
                 return "Account {$this->number}: {$this->name}, &euro;{$this->balance}";
             }
         }
@@ -355,9 +380,11 @@ foreach (BankAccount::findAll() as $account) {
         ?>
     </div>
 
-    <p><strong>Why do we need close()?</strong> PHP only calls <code>__destruct()</code> when <em>all</em> references to an object are gone. Since the static array holds a reference, we must remove it from the array first. Then <code>unset()</code> removes the last reference and triggers <code>__destruct()</code>.</p>
+    <p><strong>Why do we need close()?</strong> PHP only calls <code>__destruct()</code> when <em>all</em> references to
+        an object are gone. Since the static array holds a reference, we must remove it from the array first. Then
+        <code>unset()</code> removes the last reference and triggers <code>__destruct()</code>.</p>
 
-        <!-- Example 5 -->
+    <!-- Example 5 -->
     <h2>Using the v3 Classes</h2>
     <p>The v3 folder contains <code>BankAccount</code> with static members for tracking all accounts.</p>
     <pre><code class="language-php">require_once __DIR__ . '/classes/v3/SavingsAccount.php';
@@ -381,7 +408,7 @@ foreach (BankAccount::findAll() as $account) {
         require_once __DIR__ . '/classes/v3/CurrentAccount.php';
 
         // Use v3 namespace by referencing the included classes
-        $savings = new \SavingsAccount("S001", "Diana", 1000, 0.05);
+        $savings = new \Undergrad("S001", "Diana", 1000, 0.05);
         $current = new \CurrentAccount("C001", "Eve", 500);
         $basic = new \BankAccount("B001", "Frank", 250);
 
@@ -413,6 +440,8 @@ foreach (BankAccount::findAll() as $account) {
     </table>
 
     <script src="/examples/js/prism-core.min.js"></script>
-    <script src="/examples/js/prism-autoloader.min.js" data-autoloader-path="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/"></script>
+    <script src="/examples/js/prism-autoloader.min.js"
+        data-autoloader-path="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/"></script>
 </body>
+
 </html>

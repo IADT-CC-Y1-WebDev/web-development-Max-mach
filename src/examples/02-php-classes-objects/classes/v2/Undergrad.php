@@ -2,16 +2,19 @@
 
 require_once __DIR__ . '/BankAccount.php';
 
-class SavingsAccount extends BankAccount {
+class Undergrad extends BankAccount
+{
 
     protected $interestRate;
 
-    public function __construct($num, $name, $balance, $rate) {
+    public function __construct($num, $name, $balance, $rate)
+    {
         parent::__construct($num, $name, $balance);
         $this->interestRate = $rate;
     }
 
-    public function __toString() {
+    public function __toString()
+    {
         $format = "Account number: %s, name: %s, balance: %01.2f, interest rate: %01.2f";
         $str = sprintf(
             $format,
@@ -23,15 +26,18 @@ class SavingsAccount extends BankAccount {
         return $str;
     }
 
-    public function getInterestRate() {
+    public function getInterestRate()
+    {
         return $this->interestRate;
     }
 
-    public function setInterestRate($rate) {
+    public function setInterestRate($rate)
+    {
         $this->interestRate = $rate;
     }
 
-    public function addInterest() {
+    public function addInterest()
+    {
         $interest = $this->interestRate * $this->balance;
         $this->deposit($interest);
     }

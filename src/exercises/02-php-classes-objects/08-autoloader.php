@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Autoloader Exercises - PHP Classes &amp; Objects</title>
     <link rel="stylesheet" href="/exercises/css/style.css">
 </head>
+
 <body>
     <div class="back-link">
         <a href="index.php">&larr; Back to Classes &amp; Objects</a>
@@ -14,7 +16,8 @@
 
     <h1>Autoloader Exercises</h1>
 
-    <p><strong>Note:</strong> These exercises use your namespaced classes in <code>classes/College/</code> from the previous exercise.</p>
+    <p><strong>Note:</strong> These exercises use your namespaced classes in <code>classes/College/</code> from the
+        previous exercise.</p>
 
     <!-- Exercise 1 -->
     <h2>Exercise 1: Create an Autoloader</h2>
@@ -48,6 +51,16 @@
         // use College\Student;
         // $student = new Student("Alice", "C12345");
         // echo $student;
+        spl_autoload_register(function ($class) {
+            $path = str_replace("\\", DIRECTORY_SEPARATOR, $class);
+            $file = __DIR__ . '/classes/' . $path . '.php';
+            if (file_exists($file)) {
+                require_once $file;
+            }
+        });
+        use College\Student;
+        $student = new Student("Alice", "C12345");
+        echo $student;
         ?>
     </div>
 
@@ -69,6 +82,17 @@
         // use College\Student;
         // use College\Undergrad;
         // use College\Postgrad;
+        require_once __DIR__ . '/etc/config.php';
+        use College\Undergrad;
+        use College\Postgrad;
+        $postgrad = new Postgrad('Biliki', 124124124, 'Communication', "work");
+        $studentZero = new Student('Nero', 12412412895);
+        $studentOne = new Undergrad("Loti", 124234124, "Ge", 2007);
+        echo $studentOne . "<br>";
+        ;
+        echo $postgrad . "<br>";
+        ;
+        echo $studentZero;
         ?>
     </div>
 
@@ -93,8 +117,18 @@
     <div class="output">
         <?php
         // TODO: Write your solution here
+        require_once __DIR__ . '/etc/config.php';
+        $post = new Postgrad('Biliki', 124124124, 'Communication', "work");
+        $stuZero = new Student('Nero', 12412412895);
+        $stOne = new Undergrad("Loti", 124234124, "Ge", 2007);
+        foreach (Student::findAll() as $students) {
+            echo "<p>$students</p>";
+        }
+        ;
+        echo "Ex2 " . Student::findByNumber(12412412895);
         ?>
     </div>
 
 </body>
+
 </html>

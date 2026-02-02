@@ -1,7 +1,8 @@
 <?php
 // TODO: Write your solution here
 // require_once __DIR__ . '/classes/Undergrad.php';
-require_once __DIR__ . '/Student.php';
+namespace College;
+// require_once __DIR__ . '/Student.php';
 class Undergrad extends Student
 {
     protected $course;

@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Static Members Exercises - PHP Classes &amp; Objects</title>
     <link rel="stylesheet" href="/exercises/css/style.css">
 </head>
+
 <body>
     <div class="back-link">
         <a href="index.php">&larr; Back to Classes &amp; Objects</a>
@@ -14,7 +16,8 @@
 
     <h1>Static Members Exercises</h1>
 
-    <p><strong>Note:</strong> These exercises modify your <code>classes/Student.php</code> file to add static members. This may affect earlier exercises.</p>
+    <p><strong>Note:</strong> These exercises modify your <code>classes/Student.php</code> file to add static members.
+        This may affect earlier exercises.</p>
 
     <!-- Exercise 1 -->
     <h2>Exercise 1: Static Counter</h2>
@@ -37,13 +40,14 @@
         <?php
         // TODO: Write your solution here
         // require_once __DIR__ . '/classes/Student.php';
-         require_once __DIR__ . '/classes/Student.php';
-        $studentO = new Student("llopi",124124);
+        require_once __DIR__ . '/classes/Student.php';
+        $studentO = new Student("llopi", 124124);
         echo $studentO . "Count " . Student::getCount() . "<br>";
-        $studentT = new Student( "Bpi",11242124);
+        $studentT = new Student("Bpi", 11242124);
         echo $studentT . "Count " . Student::getCount() . "<br>";
-        $studentTh = new Student("Lopi",124124);
+        $studentTh = new Student("Lopi", 124324124);
         echo $studentTh . "Count " . Student::getCount();
+
         ?>
     </div>
 
@@ -55,13 +59,17 @@
     </p>
     <ul>
         <li>A private static array <code>$students</code> initialised to an empty array</li>
-        <li>In the constructor, add the current student to <code>self::$students</code> using the student number as the key</li>
+        <li>In the constructor, add the current student to <code>self::$students</code> using the student number as the
+            key</li>
         <li>A public static method <code>findAll()</code> that returns the <code>$students</code> array</li>
-        <li>A public static method <code>findByNumber($num)</code> that returns the student with that number, or null if not found</li>
+        <li>A public static method <code>findByNumber($num)</code> that returns the student with that number, or null if
+            not found</li>
     </ul>
     <p>
-        In Exercise 1, the static <code>$counter</code> property was added to keep a count the number of students. This property is now redundant because
-        we can simply use <code>count(Student::findAll())</code> to get the number of students. Modify your <code>Student</code> class as follows:
+        In Exercise 1, the static <code>$counter</code> property was added to keep a count the number of students. This
+        property is now redundant because
+        we can simply use <code>count(Student::findAll())</code> to get the number of students. Modify your
+        <code>Student</code> class as follows:
     </p>
     <ul>
         <li>Remove the static <code>$count</code> property</li>
@@ -79,6 +87,14 @@
         <?php
         // TODO: Write your solution here
         // require_once __DIR__ . '/classes/Student.php';
+        require_once __DIR__ . '/classes/Student.php';
+        $studentT = new Student('bobr', 12);
+        $studentM = new Student('bbr', 1);
+        foreach (Student::findAll() as $students) {
+            echo "<p>$students</p>";
+        }
+        echo "Count" . student::getCount() . "<br>";
+        echo Student::findByNumber(11242124);
         ?>
     </div>
 
@@ -101,6 +117,16 @@
         // TODO: Write your solution here
         // require_once __DIR__ . '/classes/Undergrad.php';
         // require_once __DIR__ . '/classes/Postgrad.php';
+        require_once __DIR__ . '/classes/Undergrad.php';
+        require_once __DIR__ . '/classes/Postgrad.php';
+        $postgrad = new Postgrad('Biliki', 124124124, 'Communication', "work");
+        $studentZero = new Student('Nero', 12412412895);
+        $studentOne = new Undergrad("Loti", 124234124, "Ge", 2007);
+        foreach (Student::findAll() as $students) {
+            echo "<p>$students</p>";
+        }
+        echo "Ex2 " . Student::findByNumber(124234124);
+
         ?>
     </div>
 
@@ -111,7 +137,9 @@
         Add the following to your <code>Student</code> class:
     </p>
     <ul>
-        <li>A <code>leave()</code> method that removes the student from the static <code>$students</code> array using <code>unset(self::$students[$this->number])</code></li>
+        <li>A <code>leave()</code> method that removes the student from the static <code>$students</code> array using
+            <code>unset(self::$students[$this->number])</code>
+        </li>
         <li>A <code>__destruct()</code> method that prints "Student [name] has been destroyed"</li>
     </ul>
     <p>
@@ -130,8 +158,17 @@
         <?php
         // TODO: Write your solution here
         // require_once __DIR__ . '/classes/Student.php';
+        require_once __DIR__ . '/classes/Student.php';
+        $studentM = new Student('bbasfar', 111);
+        $studentbr = new Student('Milorr', 122);
+        $studentbb = new Student('bbafr', 156);
+        echo "Count" . student::getCount() . "<br>";
+        $studentM->leave();
+        $studentbb->__destruct();
+        echo "Count" . student::getCount() . "<br>";
         ?>
     </div>
 
 </body>
+
 </html>
