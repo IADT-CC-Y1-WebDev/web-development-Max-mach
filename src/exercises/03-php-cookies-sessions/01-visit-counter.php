@@ -25,6 +25,16 @@
 // 3. Call exit; after the redirect
 // -----------------------------------------------------------------------------
 // TODO Exercise 3: Write your solution here
+      $visitCounts = isset($_COOKIE["visit_count"]) ? (int)$_COOKIE["visit_count"] : 0;
+        $visitCounts++;
+        $expiryTimes = time() + (60*60*24*30);
+        setcookie('visit_count', $visitCounts, $expiryTimes, '/');
+        if (isset($_GET["reset"])) {
+            setcookie('visit_count', '', time() - 3600, '/');
+            setcookie('last_visit', '',time() -3600, '/');
+            header('Location: 01-visit-counter.php');
+            exit;
+        }
 
 // =============================================================================
 
@@ -71,7 +81,14 @@
         // Exercise 1: Display the visit count
         // ---------------------------------------------------------------------
         // TODO Exercise 1: Write your solution here
-
+        $visitCount = isset($_COOKIE["visit_count"]) ? (int)$_COOKIE["visit_count"] : 0;
+        $visitCount++;
+        $expiryTime = time() + (60*60*24*30);
+        setcookie('visit_count', $visitCount, $expiryTime, '/');
+        if($visitCount == 7) {
+            setcookie('visit_count', '', time() - 3600, '/');
+        }
+        echo 'Count ' . $visitCount;
         // =====================================================================
         ?>
     </div>
@@ -93,7 +110,18 @@
         // - "Welcome back!" if visitCount is greater than or equal to 10
         // ---------------------------------------------------------------------
         // TODO Exercise 2: Write your solution here
-        
+           $visitCount = isset($_COOKIE["visit_count"]) ? (int)$_COOKIE["visit_count"] : 0;
+        if ($visitCount == 0) {
+            echo"<p>Welcome, first-time visitor!</p>";
+        } else if($visitCount < 10) {
+            echo "<p>Hello again!</p>";
+        } else{
+            echo "<p>Welcome back!</p>";
+        }
+        $visitCount++;
+        $expiryTime = time() + (60*60*24*30);
+        setcookie('visit_count', $visitCount, $expiryTime, '/');
+        echo 'Count ' . $visitCount;
         // =====================================================================
         ?>
     </div>
@@ -135,6 +163,11 @@
         // Example output: "Your last visit was: 2024-01-15 10:30:45"
         // ---------------------------------------------------------------------
         // TODO Exercise 4: Write your solution here
+        $lastVisit = isset($_COOKIE["last_visit"]) ? (int)$_COOKIE["last_visit"] : null;
+        $Cdate = date('Y-m-d H:i:s');
+        setcookie("last_visit", $Cdate, $expiryTime, "/");
+        echo $lastVisit;
+        
         
         // =====================================================================
         ?>
