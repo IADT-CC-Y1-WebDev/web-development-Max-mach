@@ -35,7 +35,12 @@ $cart = ShoppingCart::getInstance();
 // TODO: Write your code here
 
 if (isset($_GET['remove'])) {
-    $cart->remove((int) $_GET['remove']);
+    $item = (int) $_GET['remove'];
+    $cart->remove($item);
+    $dCheck = Product::findById($item);
+    if ($dCheck !== null) {
+        $cart->remove($item);
+    }
     header('Location: cart.php');
     exit;
 }
@@ -216,6 +221,7 @@ $cartCount = isset($cart) ? $cart->getCount() : 0;
                                 <a href="?update=<?= $item->productId ?>&qty=<?= $item->quantity + 1 ?>">+</a>
                                 <?= $item->quantity ?>
                                 <a href="?update=<?= $item->productId ?>&qty=<?= $item->quantity - 1 ?>">-</a>
+
                             </span>
                             <?php
                             // =================================================
