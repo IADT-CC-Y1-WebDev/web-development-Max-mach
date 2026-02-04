@@ -11,7 +11,10 @@
 // Hint: Check if session is not already started, then call session_start()
 // -----------------------------------------------------------------------------
 // TODO: Start the session here
-
+if(session_status() == PHP_SESSION_NONE){
+    session_start();
+}
+    
 // =============================================================================
 
 // =============================================================================
@@ -23,6 +26,13 @@
 // 4. Call exit
 // -----------------------------------------------------------------------------
 // TODO: Handle cookie theme selection here
+if(isset(($_GET['cookie_theme']))){
+    $theme = $_GET['cookie_theme'];
+    setcookie('theme', $theme, time() + (60*60*24*30),'/');
+    header('Location: 02-theme-selector.php');
+    exit;
+}
+
 
 // =============================================================================
 
@@ -36,6 +46,14 @@
 // -----------------------------------------------------------------------------
 // TODO: Handle session theme selection here
 
+
+if(isset($_GET['session_theme'])){
+   $theme = $_GET['session_theme'];
+   $_SESSION['theme'] = $theme;
+    header('Location: 02-theme-selector.php');
+    exit;
+
+}
 // =============================================================================
 
 // =============================================================================
@@ -44,7 +62,15 @@
 // For $_GET['reset_session']: unset $_SESSION['theme']
 // -----------------------------------------------------------------------------
 // TODO: Handle reset actions here
-
+ if (isset($_GET["reset_cookie"])) {
+            setcookie('theme', '', time() - 3600, '/');
+            header('Location: 02-theme-selector.php');
+            exit;
+        }
+        if (isset($_GET['reset_session'])) {
+            unset($_SESSION['theme']);
+            header('Location: 02-theme-selector.php');
+        }
 // =============================================================================
 
 // Get current theme values (these are provided for you)
@@ -102,7 +128,7 @@ $themes = [
 // -----------------------------------------------------------------------------
 // TODO: Apply the selected theme to the page by setting inline styles on <body>
 ?>
-<body style="">
+<body style="background: <?= $themes[$cookieTheme]['bg'] ?>; color: <?= $themes[$cookieTheme]['text'] ?>;">
 <?php
 // =============================================================================
 ?>

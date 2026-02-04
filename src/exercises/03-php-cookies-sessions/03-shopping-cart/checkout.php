@@ -11,6 +11,10 @@ require_once './etc/config.php';
 // Exercise 1: Start the session
 // -----------------------------------------------------------------------------
 // TODO: Write your code here
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
 
 // =============================================================================
 
@@ -18,7 +22,7 @@ require_once './etc/config.php';
 // Exercise 2: Initialize the cart
 // -----------------------------------------------------------------------------
 // TODO: Write your code here
-
+$cart = ShoppingCart::getInstance();
 // =============================================================================
 
 // Variable to track if order is complete
@@ -32,6 +36,12 @@ $orderCompleted = false;
 // -----------------------------------------------------------------------------
 // TODO: Write your code here
 
+if (isset($_GET['complete']) && !$cart->isEmpty()) {
+    $orderCompleted = true;
+    $cart->clear();
+    header('Location: checkout.php ');
+    exit;
+}
 // =============================================================================
 
 // Calculate totals
@@ -40,6 +50,7 @@ $cartCount = isset($cart) ? $cart->getCount() : 0;
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -52,7 +63,11 @@ $cartCount = isset($cart) ? $cart->getCount() : 0;
             border-radius: 8px;
             margin: 1rem 0;
         }
-        .nav-bar a { margin-right: 1rem; }
+
+        .nav-bar a {
+            margin-right: 1rem;
+        }
+
         .cart-count {
             background: #e74c3c;
             color: white;
@@ -60,22 +75,26 @@ $cartCount = isset($cart) ? $cart->getCount() : 0;
             padding: 0.2rem 0.5rem;
             font-size: 0.8rem;
         }
+
         .order-summary {
             background: #f9f9f9;
             padding: 1.5rem;
             border-radius: 8px;
             margin: 1rem 0;
         }
+
         .order-summary ul {
             list-style: none;
             padding: 0;
         }
+
         .order-summary li {
             padding: 0.5rem 0;
             border-bottom: 1px solid #eee;
             display: flex;
             justify-content: space-between;
         }
+
         .complete-btn {
             display: inline-block;
             background: #27ae60;
@@ -84,7 +103,11 @@ $cartCount = isset($cart) ? $cart->getCount() : 0;
             text-decoration: none;
             border-radius: 4px;
         }
-        .complete-btn:hover { background: #219a52; }
+
+        .complete-btn:hover {
+            background: #219a52;
+        }
+
         .success-message {
             background: #d4edda;
             border: 1px solid #c3e6cb;
@@ -93,6 +116,7 @@ $cartCount = isset($cart) ? $cart->getCount() : 0;
             border-radius: 8px;
             text-align: center;
         }
+
         .empty-cart {
             text-align: center;
             padding: 2rem;
@@ -101,6 +125,7 @@ $cartCount = isset($cart) ? $cart->getCount() : 0;
         }
     </style>
 </head>
+
 <body>
     <div class="back-link">
         <a href="../index.php">&larr; Back to Cookies &amp; Sessions</a>
@@ -120,11 +145,11 @@ $cartCount = isset($cart) ? $cart->getCount() : 0;
     <h2>Exercise: Complete the Order</h2>
     <p>
         <strong>Task:</strong> Complete the handler at the top of this file to:
-        <ol>
-            <li>Check if <code>$_GET['complete']</code> is set AND the cart is not empty</li>
-            <li>Set <code>$orderCompleted</code> to <code>true</code></li>
-            <li>Clear the cart</li>
-        </ol>
+    <ol>
+        <li>Check if <code>$_GET['complete']</code> is set AND the cart is not empty</li>
+        <li>Set <code>$orderCompleted</code> to <code>true</code></li>
+        <li>Clear the cart</li>
+    </ol>
     </p>
 
     <?php if ($orderCompleted): ?>
@@ -164,4 +189,5 @@ $cartCount = isset($cart) ? $cart->getCount() : 0;
     <?php endif; ?>
 
 </body>
+
 </html>

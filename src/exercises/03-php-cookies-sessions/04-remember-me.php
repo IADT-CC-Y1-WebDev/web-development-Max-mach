@@ -7,6 +7,9 @@
 // =============================================================================
 
 // TODO Exercise 1: Start the session
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
 
 // Available users (this is provided for you)
@@ -19,6 +22,16 @@ $users = ['alice', 'bob', 'charlie', 'dana'];
 // 3. If valid, set $_SESSION['logged_in_user'] to the username
 // 4. If $_GET['remember'] is also set, save a cookie 'remembered_user' (30 days)
 // 5. Redirect back to this page
+if (isset(($_GET['login']))) {
+    $username = $_GET['login'];
+    if (in_array($username, $users)) {
+        $_SESSION['logged_in_user'] = $username;
+        if (isset($_GET['remember'])) {
+            setcookie('remembered_user', $username, time() + 60 + 60 + 24 + 30, '/');
+            header('Location:04-remember-me.php');
+        }
+    }
+}
 
 
 // TODO Exercise 3: Handle "Logout" action
@@ -26,12 +39,24 @@ $users = ['alice', 'bob', 'charlie', 'dana'];
 // 1. Unset $_SESSION['logged_in_user']
 // 2. If $_GET['forget'] is also set, delete the 'remembered_user' cookie
 // 3. Redirect back to this page
-
+if (isset($_GET['logout'])) {
+    unset($_SESSION['logged_in_user']);
+    if (isset($_GET['forget'])) {
+        setcookie('remember_user', '', time() - 3600, '/');
+    }
+    header('Location:04-remember-me.php');
+    exit;
+}
 
 // TODO Exercise 4: Handle "Clear Remember Cookie" action
 // When $_GET['clear_cookie'] is set:
 // 1. Delete the 'remembered_user' cookie
 // 2. Redirect back to this page
+if (isset($_GET['clear_cookie'])) {
+    setcookie('remembered_user', '', time() - 3600, '/');
+    header('Location:04-remember-me.php');
+    exit;
+}
 
 
 // Determine current state (this is provided for you)
@@ -41,6 +66,7 @@ $rememberedUser = isset($_COOKIE['remembered_user']) ? $_COOKIE['remembered_user
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -52,8 +78,17 @@ $rememberedUser = isset($_COOKIE['remembered_user']) ? $_COOKIE['remembered_user
             border-radius: 8px;
             margin: 1rem 0;
         }
-        .logged-in { background: #d4edda; border: 1px solid #c3e6cb; }
-        .logged-out { background: #f8f9fa; border: 1px solid #dee2e6; }
+
+        .logged-in {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+        }
+
+        .logged-out {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+        }
+
         .remember-notice {
             background: #fff3cd;
             border: 1px solid #ffeeba;
@@ -61,12 +96,14 @@ $rememberedUser = isset($_COOKIE['remembered_user']) ? $_COOKIE['remembered_user
             border-radius: 8px;
             margin: 1rem 0;
         }
+
         .user-buttons {
             display: flex;
             gap: 0.5rem;
             flex-wrap: wrap;
             margin: 1rem 0;
         }
+
         .user-buttons a {
             padding: 0.5rem 1rem;
             border-radius: 4px;
@@ -74,25 +111,40 @@ $rememberedUser = isset($_COOKIE['remembered_user']) ? $_COOKIE['remembered_user
             background: #3498db;
             color: white;
         }
-        .user-buttons a:hover { background: #2980b9; }
-        .user-buttons a.remember { background: #27ae60; }
-        .user-buttons a.remember:hover { background: #219a52; }
+
+        .user-buttons a:hover {
+            background: #2980b9;
+        }
+
+        .user-buttons a.remember {
+            background: #27ae60;
+        }
+
+        .user-buttons a.remember:hover {
+            background: #219a52;
+        }
+
         .state-display {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 1rem;
             margin: 1rem 0;
         }
+
         .state-box {
             padding: 1rem;
             border: 1px solid #ddd;
             border-radius: 8px;
         }
+
         @media (max-width: 600px) {
-            .state-display { grid-template-columns: 1fr; }
+            .state-display {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
+
 <body>
     <div class="back-link">
         <a href="index.php">&larr; Back to Cookies &amp; Sessions</a>
@@ -142,7 +194,8 @@ $rememberedUser = isset($_COOKIE['remembered_user']) ? $_COOKIE['remembered_user
                 <div class="remember-notice">
                     <p>Welcome back, <strong><?= htmlspecialchars($rememberedUser) ?></strong>!</p>
                     <p>
-                        <a href="?login=<?= htmlspecialchars($rememberedUser) ?>">Login as <?= htmlspecialchars($rememberedUser) ?></a> |
+                        <a href="?login=<?= htmlspecialchars($rememberedUser) ?>">Login as
+                            <?= htmlspecialchars($rememberedUser) ?></a> |
                         <a href="?clear_cookie=1">That's not me</a>
                     </p>
                 </div>
@@ -177,12 +230,12 @@ $rememberedUser = isset($_COOKIE['remembered_user']) ? $_COOKIE['remembered_user
     <h2>Exercise 5: Test Your Implementation</h2>
     <p>
         <strong>Task:</strong> Test the following scenarios:
-        <ol>
-            <li>Login without "Remember" → Close browser → Reopen → You should be logged out</li>
-            <li>Login with "Remember" → Close browser → Reopen → You should see "Welcome back"</li>
-            <li>Click "Logout (keep cookie)" → The cookie should remain</li>
-            <li>Click "Logout and forget me" → Both session and cookie should be cleared</li>
-        </ol>
+    <ol>
+        <li>Login without "Remember" → Close browser → Reopen → You should be logged out</li>
+        <li>Login with "Remember" → Close browser → Reopen → You should see "Welcome back"</li>
+        <li>Click "Logout (keep cookie)" → The cookie should remain</li>
+        <li>Click "Logout and forget me" → Both session and cookie should be cleared</li>
+    </ol>
     </p>
 
     <p class="output-label">Write your observations here:</p>
@@ -196,4 +249,5 @@ $rememberedUser = isset($_COOKIE['remembered_user']) ? $_COOKIE['remembered_user
     </div>
 
 </body>
+
 </html>

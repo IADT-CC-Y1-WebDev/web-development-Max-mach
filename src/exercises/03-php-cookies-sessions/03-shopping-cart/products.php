@@ -11,6 +11,9 @@ require_once 'etc/config.php';
 // Exercise 1: Start the session
 // -----------------------------------------------------------------------------
 // TODO: Write your code here
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
 // =============================================================================
 
@@ -24,7 +27,11 @@ new Product(4, 'Hat', 14.99, 'Baseball cap');
 // Exercise 2: Initialize the cart
 // -----------------------------------------------------------------------------
 // TODO: Write your code here
- 
+$cart = ShoppingCart::getInstance();
+
+
+
+
 // =============================================================================
 
 // =============================================================================
@@ -36,7 +43,14 @@ new Product(4, 'Hat', 14.99, 'Baseball cap');
 // 4. Redirect back to products.php
 // -----------------------------------------------------------------------------
 // TODO: Write your code here
-
+if (isset($_GET['add'])) {
+    $product = Product::findById((int) $_GET['add']);
+    if ($product !== null) {
+        $cart->add($product);
+        header('Location: products.php');
+        exit;
+    }
+}
 // =============================================================================
 
 // Calculate cart count (this is provided for you)
@@ -44,6 +58,7 @@ $cartCount = isset($cart) ? $cart->getCount() : 0;
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -56,7 +71,11 @@ $cartCount = isset($cart) ? $cart->getCount() : 0;
             border-radius: 8px;
             margin: 1rem 0;
         }
-        .nav-bar a { margin-right: 1rem; }
+
+        .nav-bar a {
+            margin-right: 1rem;
+        }
+
         .cart-count {
             background: #e74c3c;
             color: white;
@@ -64,23 +83,27 @@ $cartCount = isset($cart) ? $cart->getCount() : 0;
             padding: 0.2rem 0.5rem;
             font-size: 0.8rem;
         }
+
         .product-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
             gap: 1rem;
             margin: 1rem 0;
         }
+
         .product-card {
             border: 1px solid #ddd;
             border-radius: 8px;
             padding: 1rem;
             text-align: center;
         }
+
         .product-price {
             font-size: 1.2rem;
             color: #27ae60;
             font-weight: bold;
         }
+
         .add-btn {
             display: inline-block;
             background: #3498db;
@@ -90,9 +113,13 @@ $cartCount = isset($cart) ? $cart->getCount() : 0;
             border-radius: 4px;
             margin-top: 0.5rem;
         }
-        .add-btn:hover { background: #2980b9; }
+
+        .add-btn:hover {
+            background: #2980b9;
+        }
     </style>
 </head>
+
 <body>
     <div class="back-link">
         <a href="../index.php">&larr; Back to Cookies &amp; Sessions</a>
@@ -113,12 +140,12 @@ $cartCount = isset($cart) ? $cart->getCount() : 0;
     <p>
         <strong>Task:</strong> Complete the PHP code at the top of this file to handle
         the "Add to Cart" action. When a user clicks "Add to Cart":
-        <ol>
-            <li>Get the product ID from <code>$_GET['add']</code></li>
-            <li>Check if the product exists</li>
-            <li>Add it to <code>$_SESSION['cart']</code> (or increase quantity)</li>
-            <li>Redirect back to this page</li>
-        </ol>
+    <ol>
+        <li>Get the product ID from <code>$_GET['add']</code></li>
+        <li>Check if the product exists</li>
+        <li>Add it to <code>$_SESSION['cart']</code> (or increase quantity)</li>
+        <li>Redirect back to this page</li>
+    </ol>
     </p>
 
     <!-- Product Grid -->
@@ -148,4 +175,5 @@ $cartCount = isset($cart) ? $cart->getCount() : 0;
     </div>
 
 </body>
+
 </html>
