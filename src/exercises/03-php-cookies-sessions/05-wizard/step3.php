@@ -6,9 +6,14 @@
 // =============================================================================
 
 // TODO Exercise 1: Start the session
-
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
 // TODO Exercise 2: Redirect to step 1 if quiz not started
+if (!isset($_SESSION["food_quiz"])) {
+    header("Location: step1.php");
+}
 
 
 // TODO Exercise 3: Handle answer submission
@@ -16,6 +21,12 @@
 // 1. Store the answer in $_SESSION['food_quiz']['answers']['spice_level']
 // 2. Also set $_SESSION['food_quiz']['completed_at'] to the current timestamp
 // 3. Redirect to results.php
+if (isset($_GET["answer"])) {
+    $_SESSION['food_quiz']['answers']['spice_level'] = $_GET["answer"];
+    $_SESSION['food_quiz']['completed_at'] = date("Y-m-d H:i:s");
+    header("Location: results.php");
+
+}
 
 
 // Get current answer if going back (this is provided)
@@ -29,6 +40,7 @@ $step2Completed = isset($_SESSION['food_quiz']['answers']['meal_type']);
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -42,6 +54,7 @@ $step2Completed = isset($_SESSION['food_quiz']['answers']['meal_type']);
             border-radius: 8px;
             overflow: hidden;
         }
+
         .progress-step {
             flex: 1;
             padding: 0.75rem;
@@ -49,9 +62,21 @@ $step2Completed = isset($_SESSION['food_quiz']['answers']['meal_type']);
             background: #e0e0e0;
             border-right: 1px solid #ccc;
         }
-        .progress-step:last-child { border-right: none; }
-        .progress-step.active { background: #3498db; color: white; }
-        .progress-step.completed { background: #27ae60; color: white; }
+
+        .progress-step:last-child {
+            border-right: none;
+        }
+
+        .progress-step.active {
+            background: #3498db;
+            color: white;
+        }
+
+        .progress-step.completed {
+            background: #27ae60;
+            color: white;
+        }
+
         .question-box {
             background: #f9f9f9;
             padding: 2rem;
@@ -59,12 +84,14 @@ $step2Completed = isset($_SESSION['food_quiz']['answers']['meal_type']);
             text-align: center;
             margin: 1rem 0;
         }
+
         .answer-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 1rem;
             margin: 1.5rem 0;
         }
+
         .answer-btn {
             display: block;
             padding: 1.5rem;
@@ -74,19 +101,25 @@ $step2Completed = isset($_SESSION['food_quiz']['answers']['meal_type']);
             background: white;
             color: #333;
         }
+
         .answer-btn:hover {
             border-color: #3498db;
             background: #e7f3ff;
         }
+
         .answer-btn.selected {
             border-color: #27ae60;
             background: #d4edda;
         }
+
         @media (max-width: 500px) {
-            .answer-grid { grid-template-columns: 1fr; }
+            .answer-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
+
 <body>
     <div class="back-link">
         <a href="../index.php">&larr; Back to Cookies &amp; Sessions</a>
@@ -107,11 +140,11 @@ $step2Completed = isset($_SESSION['food_quiz']['answers']['meal_type']);
     <h2>Exercise: Final Step & Mark Complete</h2>
     <p>
         <strong>Tasks:</strong>
-        <ol>
-            <li>Store this step's answer</li>
-            <li>Add a 'completed_at' timestamp to mark the quiz as done</li>
-            <li>Redirect to results.php</li>
-        </ol>
+    <ol>
+        <li>Store this step's answer</li>
+        <li>Add a 'completed_at' timestamp to mark the quiz as done</li>
+        <li>Redirect to results.php</li>
+    </ol>
     </p>
 
     <!-- Question -->
@@ -148,4 +181,5 @@ $step2Completed = isset($_SESSION['food_quiz']['answers']['meal_type']);
     </div>
 
 </body>
+
 </html>
