@@ -48,10 +48,12 @@ $formats = [
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <?php include './inc/head_content.php'; ?>
     <title>Add New Book - Exercise</title>
 </head>
+
 <body>
     <div class="back-link">
         <a href="index.php">&larr; Back to Form Handling </a>
@@ -87,15 +89,18 @@ $formats = [
                  See: /examples/04-php-forms/step-06-repopulate-fields/
                  ===========================================================
                  TODO: Repopulate title field
+                 
             -->
-            <input type="text" id="title" name="title" value="">
 
-            <!-- ===========================================================
-                 STEP 5: Display Errors
-                 See: /examples/04-php-forms/step-05-display-errors/
-                 ===========================================================
-                 TODO: Display error message if title validation fails
-            -->
+            <input type="text" id="title" name="title" value="<?= old("title"); ?>">
+            <!--===========================================================STEP 5: Display Errors See:
+                /examples/04-php-forms/step-05-display-errors/===========================================================TODO:
+                Display error message if title validation fails -->
+            <?php if (error('title')): ?>
+                <p class="error">
+                    <?= error('title') ?>
+                </p>
+            <?php endif; ?>
 
         </div>
 
@@ -105,10 +110,14 @@ $formats = [
         <div class="form-group">
             <label for="author">Author:</label>
             <!-- TODO: Repopulate author field                               -->
-            <input type="text" id="author" name="author" value="">
+            <input type="text" id="author" name="author" value="<?= old("author"); ?>">
 
             <!-- TODO: Display error message if author validation fails      -->
-
+            <?php if (error('author')): ?>
+                <p class="error">
+                    <?= error('author') ?>
+                </p>
+            <?php endif; ?>
         </div>
 
         <!-- =============================================================== -->
@@ -133,7 +142,11 @@ $formats = [
             </select>
 
             <!-- TODO: Display error message if publisher validation fails   -->
-
+            <?php if (error('publisher_id')): ?>
+                <p class="error">
+                    <?= error('publisher_id') ?>
+                </p>
+            <?php endif; ?>
         </div>
 
         <!-- =============================================================== -->
@@ -142,10 +155,14 @@ $formats = [
         <div class="form-group">
             <label for="year">Year:</label>
             <!-- TODO: Repopulate year field                                 -->
-            <input type="text" id="year" name="year" value="">
+            <input type="text" id="year" name="year" value="<?= old("year"); ?>">
 
             <!-- TODO: Display error message if year validation fails        -->
-
+            <?php if (error('year')): ?>
+                <p class="error">
+                    <?= error('year') ?>
+                </p>
+            <?php endif; ?>
         </div>
 
         <!-- =============================================================== -->
@@ -154,10 +171,14 @@ $formats = [
         <div class="form-group">
             <label for="isbn">ISBN:</label>
             <!-- TODO: Repopulate ISBN field                                 -->
-            <input type="text" id="isbn" name="isbn" value="">
+            <input type="text" id="isbn" name="isbn" value="<?= old("isbn"); ?>">
 
             <!-- TODO: Display error message if ISBN validation fails        -->
-
+            <?php if (error('isbn')): ?>
+                <p class="error">
+                    <?= error('isbn') ?>
+                </p>
+            <?php endif; ?>
         </div>
 
         <!-- =============================================================== -->
@@ -182,6 +203,11 @@ $formats = [
             </div>
 
             <!-- TODO: Display error message if formats validation fails     -->
+            <?php if (error('format_ids')): ?>
+                <p class="error">
+                    <?= error('format_ids') ?>
+                </p>
+            <?php endif; ?>
 
         </div>
 
@@ -191,22 +217,31 @@ $formats = [
         <div class="form-group">
             <label for="description">Description:</label>
             <!-- TODO: Repopulate description field                          -->
-            <textarea id="description" name="description" rows="5"></textarea>
+            <textarea id="description" name="description" rows="5"><?= old("isbn"); ?></textarea>
 
             <!-- TODO: Display error message if description validation fails -->
-
+            <?php if (error('description')): ?>
+                <p class="error">
+                    <?= error('description') ?>
+                </p>
+            <?php endif; ?>
         </div>
 
         <!-- =============================================================== -->
         <!-- Cover Image File Upload                                         -->
         <!-- See: /examples/04-php-forms/step-09-file-uploads/               -->
         <!-- =============================================================== -->
-        <div class="form-group">
+        <div class=" form-group">
             <label for="cover">Book Cover Image (max 2MB):</label>
             <!-- NOTE: File inputs cannot be repopulated for security reasons -->
             <input type="file" id="cover" name="cover" accept="image/*">
 
             <!-- TODO: Display error message if cover validation fails       -->
+            <?php if (error('cover')): ?>
+                <p class="error">
+                    <?= error('cover') ?>
+                </p>
+            <?php endif; ?>
 
         </div>
 
@@ -226,5 +261,6 @@ $formats = [
     <?php
     //   Clear form data and errors
     ?>
-    </body>
+</body>
+
 </html>
