@@ -50,6 +50,7 @@ $formats = [
 <html lang="en">
 
 <head>
+    <?php include './inc/flash_message.php'; ?>
     <?php include './inc/head_content.php'; ?>
     <title>Add New Book - Exercise</title>
 </head>

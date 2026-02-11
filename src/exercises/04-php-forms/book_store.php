@@ -31,7 +31,7 @@ try {
     // =========================================================================
     // TODO: First, just dump the posted data to see what's submitted
 
-    dd($_POST);
+    // dd($_POST);
 
     // =========================================================================
     // STEP 2: Check Request Method
@@ -64,7 +64,7 @@ try {
         'description' => $_POST['description'] ?? null,
         'cover' => $_FILES['cover'] ?? null
     ];
-    dd($data);
+    // dd($data);
 
     // =========================================================================
     // STEP 4: Validate Data
@@ -94,7 +94,9 @@ try {
     }
     $uploader = new ImageUpload();
     $imageFilename = $uploader->process($_FILES['cover']);
-    echo "Validation passed";
+    // echo "Validation passed";
+
+
     // =========================================================================
     // STEP 9: File Uploads
     // See: /examples/04-php-forms/step-09-file-uploads/
@@ -119,13 +121,16 @@ try {
     // =========================================================================
     // TODO: Clear form data on success (before redirect)
 
-
+    clearFormData();
+    clearFormErrors();
     // =========================================================================
     // STEP 8: Flash Messages
     // See: /examples/04-php-forms/step-08-flash-messages/
     // =========================================================================
     // TODO: On successful registration, set a success flash message and 
     // redirect back to the form
+    setFlashMessage('success', 'Form validated successfully!');
+    redirect("success.php");
 } catch (Exception $e) {
     // =========================================================================
     // STEP 5: Store Errors and Redirect
@@ -146,6 +151,6 @@ try {
     // See: /examples/04-php-forms/step-08-flash-messages/
     // =========================================================================
     // TODO: On validation error, you set an error flash message
-
+    setFlashMessage('error', 'Form validated failed!');
     redirect("book_create.php");
 }
