@@ -5,8 +5,7 @@ require_once __DIR__ . '/lib/config.php';
 // =============================================================================
 try {
     $db = new PDO(DB_DSN, DB_USER, DB_PASS, DB_OPTIONS);
-} 
-catch (PDOException $e) {
+} catch (PDOException $e) {
     echo "<p class='error'>Connection failed: " . $e->getMessage() . "</p>";
     exit();
 }
@@ -14,10 +13,12 @@ catch (PDOException $e) {
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <?php include __DIR__ . '/inc/head_content.php'; ?>
     <title>Exercise 2: SELECT Queries - PHP Database</title>
 </head>
+
 <body>
     <div class="container">
         <div class="back-link">
@@ -52,8 +53,40 @@ catch (PDOException $e) {
             // 2. Fetch all results
             // 3. Display count
             // 4. Create HTML table with the results
+            $stm = $db->query("SELECT * FROM books ORDER BY title");
+            $books = $stm->fetchAll();
+            echo "<p>Found " . count($books) . " games</p>";
             ?>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>Release Date</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($books as $book): ?>
+                        <tr>
+                            <td>
+                                <?= $book['id'] ?>
+                            </td>
+                            <td>
+                                <?= htmlspecialchars($book['title']) ?>
+                            </td>
+                            <td>
+                                <?= $book['year'] ?>
+                            </td>
+                            <td>
+                                <?= htmlspecialchars(substr($book['description'], 0, 50)) ?>...
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
         </div>
     </div>
 </body>
+
 </html>

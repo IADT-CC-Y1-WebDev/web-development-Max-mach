@@ -5,8 +5,7 @@ require_once __DIR__ . '/lib/config.php';
 // =============================================================================
 try {
     $db = new PDO(DB_DSN, DB_USER, DB_PASS, DB_OPTIONS);
-} 
-catch (PDOException $e) {
+} catch (PDOException $e) {
     echo "<p class='error'>Connection failed: " . $e->getMessage() . "</p>";
     exit();
 }
@@ -14,10 +13,12 @@ catch (PDOException $e) {
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <?php include __DIR__ . '/inc/head_content.php'; ?>
     <title>Exercise 3: Prepared Statements - PHP Database</title>
 </head>
+
 <body>
     <div class="container">
         <div class="back-link">
@@ -44,6 +45,16 @@ catch (PDOException $e) {
             // 1. Prepare: SELECT * FROM books WHERE id = :id
             // 2. Execute with ['id' => 1]
             // 3. Fetch and display result
+            $id = 1;
+            $stmt = $db->prepare("SELECT * FROM books WHERE id = :id");
+            $stmt->execute(['id' => $id]);
+            $book = $stmt->fetch();
+            if ($book !== null) {
+                echo 'Found: ' . $book['title'];
+            } else {
+                echo "Not found";
+            }
+
             ?>
         </div>
 
@@ -63,8 +74,20 @@ catch (PDOException $e) {
             // 1. Prepare: SELECT * FROM books WHERE author LIKE :search
             // 2. Execute with ['search' => '%George%']
             // 3. Loop through and display results
+            $search = "George";
+            $stmt = $db->prepare("SELECT * FROM books WHERE author LIKE :search");
+            $stmt->execute(['search' => "%$search%"]);
+            $books = $stmt->fetchAll();
+            if (count($books) !== 0) {
+                foreach ($books as $book) {
+                    echo 'Found: ' . $book['title'] . "<br/>";
+                }
+            } else {
+                echo 'Not found';
+            }
             ?>
         </div>
     </div>
 </body>
+
 </html>

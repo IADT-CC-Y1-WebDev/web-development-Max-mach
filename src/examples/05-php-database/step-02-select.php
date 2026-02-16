@@ -6,10 +6,12 @@ $db = new PDO(DB_DSN, DB_USER, DB_PASS, DB_OPTIONS);
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <?php include __DIR__ . '/inc/head_content.php'; ?>
     <title>Step 2: SELECT Queries - PHP Database</title>
 </head>
+
 <body>
     <div class="container">
         <div class="back-link">
@@ -28,7 +30,7 @@ $db = new PDO(DB_DSN, DB_USER, DB_PASS, DB_OPTIONS);
         <h2>Basic SELECT Query</h2>
 
         <p>Use <code>query()</code> for simple queries without user input. Never use this for
-        queries that include user-provided values.</p>
+            queries that include user-provided values.</p>
 
         <pre><code class="language-php">&lt;?php
 $stmt = $db->query("SELECT * FROM games ORDER BY title");
@@ -97,12 +99,12 @@ $games = $stmt->fetchAll();
                 </thead>
                 <tbody>
                     <?php foreach ($games as $game): ?>
-                    <tr>
-                        <td><?= $game['id'] ?></td>
-                        <td><?= htmlspecialchars($game['title']) ?></td>
-                        <td><?= $game['release_date'] ?></td>
-                        <td><?= htmlspecialchars(substr($game['description'], 0, 50)) ?>...</td>
-                    </tr>
+                        <tr>
+                            <td><?= $game['id'] ?></td>
+                            <td><?= htmlspecialchars($game['title']) ?></td>
+                            <td><?= $game['release_date'] ?></td>
+                            <td><?= htmlspecialchars(substr($game['description'], 0, 50)) ?>...</td>
+                        </tr>
                     <?php endforeach; ?>
                 </tbody>
             </table>
@@ -234,6 +236,8 @@ echo "Total games: " . count($games);</code></pre>
     </div>
 
     <script src="/examples/js/prism-core.min.js"></script>
-    <script src="/examples/js/prism-autoloader.min.js" data-autoloader-path="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/"></script>
+    <script src="/examples/js/prism-autoloader.min.js"
+        data-autoloader-path="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/"></script>
 </body>
+
 </html>
