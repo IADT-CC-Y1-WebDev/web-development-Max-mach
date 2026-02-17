@@ -5,8 +5,7 @@ require_once __DIR__ . '/lib/config.php';
 // =============================================================================
 try {
     $db = new PDO(DB_DSN, DB_USER, DB_PASS, DB_OPTIONS);
-} 
-catch (PDOException $e) {
+} catch (PDOException $e) {
     echo "<p class='error'>Connection failed: " . $e->getMessage() . "</p>";
     exit();
 }
@@ -14,10 +13,12 @@ catch (PDOException $e) {
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <?php include __DIR__ . '/inc/head_content.php'; ?>
     <title>Exercise 5: UPDATE Operations - PHP Database</title>
 </head>
+
 <body>
     <div class="container">
         <div class="back-link">
@@ -47,8 +48,35 @@ catch (PDOException $e) {
             // 3. Execute with new description + timestamp
             // 4. Check rowCount()
             // 5. Fetch and display updated book
+            $stmt = $db->query("SELECT * FROM books WHERE id = 1");
+            $books = $stmt->fetch();
+            if ($books) {
+                echo "Title " . $books['title'] . "<br>";
+                echo "Author: " . $books['author'] . "<br>";
+                echo "Year: " . $books['year'] . "<br>";
+                echo "Description: " . $books['description'] . "<br>";
+            }
+            $stmt = $db->prepare("
+            UPDATE books
+            SET description = :description,
+            year = :year
+            WHERE id = :id
+            ");
+
+            $stmt->execute([
+                "description" => "fafwafafawfawfawf",
+                "year" => 2010,
+                "id" => 1
+            ]);
+            $affected = $stmt->rowCount();
+            if ($affected === 0) {
+                echo "No rows updated - record may not exist";
+            } else {
+                echo "Updated $affected row(s)";
+            }
             ?>
         </div>
     </div>
 </body>
+
 </html>

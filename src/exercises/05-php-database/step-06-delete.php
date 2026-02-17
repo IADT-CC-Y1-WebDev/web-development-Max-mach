@@ -5,8 +5,7 @@ require_once __DIR__ . '/lib/config.php';
 // =============================================================================
 try {
     $db = new PDO(DB_DSN, DB_USER, DB_PASS, DB_OPTIONS);
-} 
-catch (PDOException $e) {
+} catch (PDOException $e) {
     echo "<p class='error'>Connection failed: " . $e->getMessage() . "</p>";
     exit();
 }
@@ -14,10 +13,12 @@ catch (PDOException $e) {
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <?php include __DIR__ . '/inc/head_content.php'; ?>
     <title>Exercise 6: DELETE Operations - PHP Database</title>
 </head>
+
 <body>
     <div class="container">
         <div class="back-link">
@@ -48,8 +49,37 @@ catch (PDOException $e) {
             // 4. DELETE FROM books WHERE id = :id
             // 5. Check rowCount()
             // 6. Try to fetch the book again to verify deletion
+            $stmt = $db->prepare("INSERT INTO books (title, author, publisher_id, year, description)
+                VALUES (:title,:author,:publisher_id,:year,:description)");
+            $success = $stmt->execute([
+                "title" => "My Favorite Book Two",
+                "author" => "Maximum",
+                "publisher_id" => 6,
+                "year" => 2024,
+                "description" => "A book I created for learning PDOM"
+            ]);
+            $newID = $db->lastInsertId();
+            $stmt = $db->query("SELECT * FROM books WHERE id = $newID");
+            $books = $stmt->fetch();
+            if ($books) {
+                echo "ID: " . $books['id'] . "<br>";
+                echo "Title " . $books['title'] . "<br>";
+                echo "Author: " . $books['author'] . "<br>";
+                echo "Year: " . $books['year'] . "<br>";
+                echo "Description: " . $books['description'] . "<br>";
+
+            }
+            $stmt = $db->prepare("DELETE FROM books WHERE id = :id");
+            $stmt->execute(['id' => $newID]);
+            $deleted = $stmt->rowCount();
+            if ($deleted > 0) {
+                echo "Deleted $deleted record(s)";
+            } else {
+                echo "No records found to delete";
+            }
             ?>
         </div>
     </div>
 </body>
+
 </html>

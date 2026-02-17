@@ -5,8 +5,7 @@ require_once __DIR__ . '/lib/config.php';
 // =============================================================================
 try {
     $db = new PDO(DB_DSN, DB_USER, DB_PASS, DB_OPTIONS);
-} 
-catch (PDOException $e) {
+} catch (PDOException $e) {
     echo "<p class='error'>Connection failed: " . $e->getMessage() . "</p>";
     exit();
 }
@@ -14,10 +13,12 @@ catch (PDOException $e) {
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <?php include __DIR__ . '/inc/head_content.php'; ?>
     <title>Exercise 4: INSERT Operations - PHP Database</title>
 </head>
+
 <body>
     <div class="container">
         <div class="back-link">
@@ -56,8 +57,28 @@ catch (PDOException $e) {
             // 3. Check rowCount() === 1
             // 4. Get lastInsertId()
             // 5. Display success message with the new ID
+            try {
+                $stmt = $db->prepare("INSERT INTO books (title, author, publisher_id, year, description)
+                VALUES (:title,:author,:publisher_id,:year,:description)");
+                $success = $stmt->execute([
+                    "title" => "My Favorite Book",
+                    "author" => "Max",
+                    "publisher_id" => 1,
+                    "year" => 2024,
+                    "description" => "A book I created for learning PDO"
+                ]);
+                if ($success && $stmt->rowCount() === 1) {
+                    echo "Successfully inserted 1 row";
+                } else {
+                    echo "Insert failed";
+                }
+                echo "Inserted successfully!";
+            } catch (PDOException $e) {
+                echo "Insert failed: " . $e->getMessage();
+            }
             ?>
         </div>
     </div>
 </body>
+
 </html>
