@@ -3,10 +3,12 @@ require_once __DIR__ . '/lib/config.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <?php include __DIR__ . '/inc/head_content.php'; ?>
     <title>Exercise 7: Database Singleton - PHP Database</title>
 </head>
+
 <body>
     <div class="container">
         <div class="back-link">
@@ -35,8 +37,20 @@ require_once __DIR__ . '/lib/config.php';
             // 3. Display the count
             // 4. Get DB::getInstance() twice and compare with ===
             // 5. Display whether they are the same instance
+            $db = DB::getInstance()->getConnection();
+            $stmt = $db->query("SELECT COUNT(*) AS total FROM books");
+            $books = $stmt->fetch();
+            if ($books !== false) {
+                echo "Total books: " . $books['total'] . "</br>";
+            }
+            $instance1 = DB::getInstance();
+            $instance2 = DB::getInstance();
+            if ($instance1 === $instance2) {
+                echo "Same instance!";
+            }
             ?>
         </div>
     </div>
 </body>
+
 </html>
