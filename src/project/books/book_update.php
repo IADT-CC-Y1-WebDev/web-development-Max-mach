@@ -21,22 +21,25 @@ try {
     $data = [
         'id' => $_POST['id'] ?? null,
         'title' => $_POST['title'] ?? null,
-        'release_date' => $_POST['release_date'] ?? null,
-        'genre_id' => $_POST['genre_id'] ?? null,
+        'author' => $_POST['author'] ?? null,
+        'publisher_id' => $_POST['publisher_id'] ?? null,
+        'year' => $_POST['year'] ?? null,
+        'isbn' => $_POST['isbn'] ?? null,
+        'format_ids' => $_POST['format_ids'] ?? [],
         'description' => $_POST['description'] ?? null,
-        'platform_ids' => $_POST['platform_ids'] ?? [],
-        'image' => $_FILES['image'] ?? null
+        'cover' => $_POST['cover'] ?? null
     ];
 
     // Define validation rules
     $rules = [
-        'id' => 'required|integer',
         'title' => 'required|notempty|min:1|max:255',
-        'release_date' => 'required|notempty',
-        'genre_id' => 'required|integer',
-        'description' => 'required|notempty|min:10|max:5000',
-        'platform_ids' => 'required|array|min:1|max:10',
-        'image' => 'file|image|mimes:jpg,jpeg,png|max_file_size:5242880' // optional -- no required rule
+        'author' => 'required|notempty|min:1|max:255',
+        'publisher_id' => 'required|notempty|integer',
+        'year' => 'required|notempty|minvalue:1900|maxvalue:' . $year,
+        'isbn' => 'required|notempty|min:13|max:13',
+        'format_ids' => 'required|notempty|array|min:1|max:4',
+        'description' => 'required|notempty|min:10',
+        'cover' => 'required|file|image|mimes:jpg,jpeg,png|max_file_size:5242880'
     ];
 
     // Validate all data (including file)
@@ -52,30 +55,18 @@ try {
     }
 
     // Find existing game
-    $game = Game::findById($data['id']);
-    if (!$game) {
+    $book = Book::findById($data['id']);
+    if (!$book) {
         throw new Exception('Game not found.');
     }
 
-    // Verify genre exists
-    $genre = Genre::findById($data['genre_id']);
-    if (!$genre) {
-        throw new Exception('Selected genre does not exist.');
-    }
-
-    // Verify platforms exist
-    foreach ($data['platform_ids'] as $platformId) {
-        if (!Platform::findById($platformId)) {
-            throw new Exception('One or more selected platforms do not exist.');
-        }
-    }
 
     // Process the uploaded image (validation already completed)
     $imageFilename = null;
     $uploader = new ImageUpload();
     if ($uploader->hasFile('image')) {
         // Delete old image
-        $uploader->deleteImage($game->image_filename);
+        $uploader->deleteImage($book->cover_filename);
         // Process new image
         $imageFilename = $uploader->process($_FILES['image']);
         // Check for processing errors
@@ -84,37 +75,26 @@ try {
         }
     }
 
-    // Update the game instance
-    $game->title = $data['title'];
-    $game->release_date = $data['release_date'];
-    $game->genre_id = $data['genre_id'];
-    $game->description = $data['description'];
-    if ($imageFilename) {
-        $game->image_filename = $imageFilename;
-    }
+    $book = new Book();
+    $book->title = $data['title'];
+    $book->author = $data['author'];
+    $book->isbn = $data['isbn'];
+    $book->year = $data['year'];
+    $book->description = $data['description'];
+    $book->cover_filename = $data['cover'];
 
     // Save to database
-    $game->save();
+    $book->save();
 
-    // Delete existing platform associations
-    GamePlatform::deleteByGame($game->id);
-    // Create new platform associations
-    if (!empty($data['platform_ids']) && is_array($data['platform_ids'])) {
-        foreach ($data['platform_ids'] as $platformId) {
-            GamePlatform::create($game->id, $platformId);
-        }
-    }
 
-    // Clear any old form data
     clearFormData();
-    // Clear any old errors
     clearFormErrors();
 
     // Set success flash message
     setFlashMessage('success', 'Game updated successfully.');
 
     // Redirect to game details page
-    redirect('game_view.php?id=' . $game->id);
+    redirect('index.php?id=' . $book->id);
 } catch (Exception $e) {
     // Error - clean up uploaded image
     if ($imageFilename) {

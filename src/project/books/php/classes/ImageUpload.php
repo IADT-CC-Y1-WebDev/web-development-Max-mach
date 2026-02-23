@@ -1,9 +1,11 @@
 <?php
 
-class ImageUpload {
+class ImageUpload
+{
     private $targetDir;
 
-    public function __construct($targetDir = null) {
+    public function __construct($targetDir = null)
+    {
         if ($targetDir === null) {
             $this->targetDir = dirname(__DIR__) . '/images/';
         } else {
@@ -24,7 +26,8 @@ class ImageUpload {
      * @param string|null $existingFilename The filename of an existing image to replace (will be deleted)
      * @return string|false The filename of the saved image, or false on failure
      */
-    public function process($file, $existingFilename = null) {
+    public function process($file, $existingFilename = null)
+    {
         // Get MIME type
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
         $mimeType = finfo_file($finfo, $file['tmp_name']);
@@ -54,11 +57,13 @@ class ImageUpload {
      * @param string $key The key to check in the $_FILES array
      * @return bool True if a file was uploaded, false otherwise
      */
-    public function hasFile($key) {
+    public function hasFile($key)
+    {
         return isset($_FILES[$key]) && $_FILES[$key]['error'] === UPLOAD_ERR_OK;
     }
 
-    public function deleteImage($filename) {
+    public function deleteImage($filename)
+    {
         if (empty($filename)) {
             return true;
         }
@@ -71,16 +76,18 @@ class ImageUpload {
         return true;
     }
 
-    private function generateUniqueFilename($extension) {
+    private function generateUniqueFilename($extension)
+    {
         do {
-            $filename = uniqid('game_', true) . '.' . $extension;
+            $filename = uniqid('product_', true) . '.' . $extension;
             $filePath = $this->targetDir . $filename;
         } while (file_exists($filePath));
 
         return $filename;
     }
 
-    private function getExtensionFromMimeType($mimeType) {
+    private function getExtensionFromMimeType($mimeType)
+    {
         switch ($mimeType) {
             case 'image/jpeg':
             case 'image/jpg':

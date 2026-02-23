@@ -260,7 +260,10 @@ $formats = [
     <!-- =================================================================== -->
     <!-- TODO: Clear form data and errors after displaying the page          -->
     <?php
-    //   Clear form data and errors
+    // Clear form data after displaying
+    clearFormData();
+    // Clear errors after displaying
+    clearFormErrors();
     ?>
 </body>
 
