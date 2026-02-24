@@ -5,22 +5,6 @@ require_once 'php/lib/forms.php';
 require_once 'php/lib/utils.php';
 
 startSession();
-$publishers = [
-    ['id' => 1, 'name' => 'Penguin Random House'],
-    ['id' => 2, 'name' => 'HarperCollins'],
-    ['id' => 3, 'name' => 'Simon & Schuster'],
-    ['id' => 4, 'name' => 'Hachette Book Group'],
-    ['id' => 5, 'name' => 'Macmillan Publishers'],
-    ['id' => 6, 'name' => 'Scholastic Corporation'],
-    ['id' => 7, 'name' => 'O\'Reilly Media']
-];
-
-$formats = [
-    ['id' => 1, 'name' => 'Hardcover'],
-    ['id' => 2, 'name' => 'Paperback'],
-    ['id' => 3, 'name' => 'Ebook'],
-    ['id' => 4, 'name' => 'Audiobook']
-];
 
 try {
     if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
@@ -35,8 +19,8 @@ try {
     if ($book === null) {
         throw new Exception("Book not found.");
     }
-
-
+    $publishers = Publisher::findAll();
+$formats = Formats::findAll();
 } catch (PDOException $e) {
     setFlashMessage('error', 'Error: ' . $e->getMessage());
     redirect('/index.php');
@@ -69,7 +53,10 @@ try {
 
         </div>
         <div class="width-12">
-            <form action="book_store.php" method="POST" enctype="multipart/form-data">
+            <form action="book_update.php" method="POST" enctype="multipart/form-data">
+                <div class="input">
+                    <input type="hidden" name="id" value="<?= h($book->id) ?>">
+                </div>
 
                 <!-- =============================================================== -->
                 <!-- Book Title Field                                                -->
@@ -84,7 +71,7 @@ try {
                         
                     -->
 
-                    <input type="text" id="title" name="title" value="<?= h(old("title")); ?>">
+                    <input type="text" id="title" name="title" value="<?= h(old("title", $book->title)); ?>">
                     <!--===========================================================STEP 5: Display Errors See:
                         /examples/04-php-forms/step-05-display-errors/===========================================================TODO:
                         Display error message if title validation fails -->
@@ -102,7 +89,7 @@ try {
                 <div class="form-group">
                     <label for="author">Author:</label>
                     <!-- TODO: Repopulate author field                               -->
-                    <input type="text" id="author" name="author" value="<?= h(old("author")); ?>">
+                    <input type="text" id="author" name="author" value="<?= h(old("author", $book->author)); ?>">
 
                     <!-- TODO: Display error message if author validation fails      -->
                     <?php if (error('author')): ?>
@@ -127,8 +114,8 @@ try {
                             TODO: Use chosen() to repopulate selected option 
                         -->
                         <?php foreach ($publishers as $pub): ?>
-                            <option value="<?= $pub['id'] ?>" <?= chosen('publisher_id', $pub['id']) ? 'selected' : '' ?>>
-                                <?= h($pub['name']) ?>
+                            <option value="<?= h($pub->id) ?>" <?= chosen('publisher_id', $pub->id) ? "selected" : "" ?>>
+                                <?= h($pub->name) ?>
                             </option>
                         <?php endforeach; ?>
                     </select>
@@ -147,7 +134,7 @@ try {
                 <div class="form-group">
                     <label for="year">Year:</label>
                     <!-- TODO: Repopulate year field                                 -->
-                    <input type="text" id="year" name="year" value="<?= h(old("year")); ?>">
+                    <input type="text" id="year" name="year" value="<?= h(old("year", $book->year)); ?>">
 
                     <!-- TODO: Display error message if year validation fails        -->
                     <?php if (error('year')): ?>
@@ -163,7 +150,7 @@ try {
                 <div class="form-group">
                     <label for="isbn">ISBN:</label>
                     <!-- TODO: Repopulate ISBN field                                 -->
-                    <input type="text" id="isbn" name="isbn" value="<?= h(old("isbn")); ?>">
+                    <input type="text" id="isbn" name="isbn" value="<?= h(old("isbn", $book->isbn)); ?>">
 
                     <!-- TODO: Display error message if ISBN validation fails        -->
                     <?php if (error('isbn')): ?>
@@ -187,10 +174,10 @@ try {
                             TODO: Use chosen() to repopulate checkbox state
                         -->
                         <?php foreach ($formats as $format): ?>
-                            <label class="checkbox-label">
-                                <input type="checkbox" name="format_ids[]" value="<?= $format['id'] ?>"
-                                    <?= chosen('format_ids', $format['id']) ? 'checked' : '' ?>>
-                                <?= h($format['name']) ?>
+                           <label class="checkbox-label">
+                                <input type="checkbox" id="platform_<?= h($format->id) ?>" name="format_ids[]" value="<?= $format->id ?>"
+                                    <?= chosen('format_ids', $format->id) ? 'checked' : '' ?>>
+                                <?= h($format->name) ?>
                             </label>
                         <?php endforeach; ?>
                     </div>
@@ -210,7 +197,8 @@ try {
                 <div class="form-group">
                     <label for="description">Description:</label>
                     <!-- TODO: Repopulate description field                          -->
-                    <textarea id="description" name="description" rows="5"><?= h(old("description")); ?></textarea>
+                    <textarea id="description" name="description"
+                        rows="5"><?= h(old("description", $book->description)); ?></textarea>
 
                     <!-- TODO: Display error message if description validation fails -->
                     <?php if (error('description')): ?>

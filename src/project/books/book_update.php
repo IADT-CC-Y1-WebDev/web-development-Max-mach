@@ -27,7 +27,7 @@ try {
         'isbn' => $_POST['isbn'] ?? null,
         'format_ids' => $_POST['format_ids'] ?? [],
         'description' => $_POST['description'] ?? null,
-        'cover' => $_POST['cover'] ?? null
+        'cover' => $_FILES['cover'] ?? null
     ];
 
     // Define validation rules
@@ -35,7 +35,7 @@ try {
         'title' => 'required|notempty|min:1|max:255',
         'author' => 'required|notempty|min:1|max:255',
         'publisher_id' => 'required|notempty|integer',
-        'year' => 'required|notempty|minvalue:1900|maxvalue:' . $year,
+        'year' => 'required|notempty|integer|minvalue:1900|maxvalue:' . date('Y'),
         'isbn' => 'required|notempty|min:13|max:13',
         'format_ids' => 'required|notempty|array|min:1|max:4',
         'description' => 'required|notempty|min:10',
@@ -57,31 +57,36 @@ try {
     // Find existing game
     $book = Book::findById($data['id']);
     if (!$book) {
-        throw new Exception('Game not found.');
+        throw new Exception('Book not found.');
     }
 
-
+    // $genre = Publisher::findById($data['publisher_id']);
+    // if (!$genre) {
+    //     throw new Exception('Selected genre does not exist.');
+    // }
     // Process the uploaded image (validation already completed)
     $imageFilename = null;
     $uploader = new ImageUpload();
-    if ($uploader->hasFile('image')) {
+    if ($uploader->hasFile('cover')) {
         // Delete old image
         $uploader->deleteImage($book->cover_filename);
         // Process new image
-        $imageFilename = $uploader->process($_FILES['image']);
+        $imageFilename = $uploader->process($_FILES['cover']);
         // Check for processing errors
         if (!$imageFilename) {
             throw new Exception('Failed to process and save the image.');
         }
     }
-
-    $book = new Book();
     $book->title = $data['title'];
     $book->author = $data['author'];
+    $book->publisher_id = $data['publisher_id'];
     $book->isbn = $data['isbn'];
     $book->year = $data['year'];
+    $book->format_ids = $data['format_ids'];
     $book->description = $data['description'];
-    $book->cover_filename = $data['cover'];
+    if ($imageFilename) {
+        $book->cover_filename = $imageFilename;
+    }
 
     // Save to database
     $book->save();
@@ -94,7 +99,7 @@ try {
     setFlashMessage('success', 'Game updated successfully.');
 
     // Redirect to game details page
-    redirect('index.php?id=' . $book->id);
+    redirect('index.php');
 } catch (Exception $e) {
     // Error - clean up uploaded image
     if ($imageFilename) {
@@ -110,7 +115,7 @@ try {
 
     // Redirect back to edit page if there is an ID; otherwise, go to index page
     if (isset($data['id']) && $data['id']) {
-        redirect('game_edit.php?id=' . $data['id']);
+        redirect('book_edit.php?id=' . $data['id']);
     } else {
         redirect('index.php');
     }

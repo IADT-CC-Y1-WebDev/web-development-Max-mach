@@ -92,16 +92,24 @@ try {
         }
         throw new Exception("Validation failed.");
     }
+    $genre = Genre::findById($data['publisher_id']);
+    if (!$genre) {
+        throw new Exception('Selected genre does not exist.');
+    }
     $uploader = new ImageUpload();
     $imageFilename = $uploader->process($_FILES['cover']);
     // echo "Validation passed";
     $book = new Book();
     $book->title = $data['title'];
     $book->author = $data['author'];
+    $book->publisher_id = $data['publisher_id'];
     $book->isbn = $data['isbn'];
     $book->year = $data['year'];
+    $book->format_ids = $data['format_ids'];
     $book->description = $data['description'];
-    $book->cover_filename = $data['cover'];
+    if ($imageFilename) {
+        $book->cover_filename = $imageFilename;
+    }
 
     // Save to database
     $book->save();

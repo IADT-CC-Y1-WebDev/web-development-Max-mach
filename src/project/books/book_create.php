@@ -29,22 +29,15 @@ startSession();
  * Mock data for the form. 
  * In a real application, these would be fetched from the database tables.
  */
-$publishers = [
-    ['id' => 1, 'name' => 'Penguin Random House'],
-    ['id' => 2, 'name' => 'HarperCollins'],
-    ['id' => 3, 'name' => 'Simon & Schuster'],
-    ['id' => 4, 'name' => 'Hachette Book Group'],
-    ['id' => 5, 'name' => 'Macmillan Publishers'],
-    ['id' => 6, 'name' => 'Scholastic Corporation'],
-    ['id' => 7, 'name' => 'O\'Reilly Media']
-];
 
-$formats = [
-    ['id' => 1, 'name' => 'Hardcover'],
-    ['id' => 2, 'name' => 'Paperback'],
-    ['id' => 3, 'name' => 'Ebook'],
-    ['id' => 4, 'name' => 'Audiobook']
-];
+
+try {
+    $publishers = Publisher::findAll();
+    $formats = Formats::findAll();
+} catch (PDOException $e) {
+    setFlashMessage('error', 'Error: ' . $e->getMessage());
+    redirect('/index.php');
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -131,8 +124,8 @@ $formats = [
                             TODO: Use chosen() to repopulate selected option 
                         -->
                         <?php foreach ($publishers as $pub): ?>
-                            <option value="<?= $pub['id'] ?>" <?= chosen('publisher_id', $pub['id']) ? 'selected' : '' ?>>
-                                <?= h($pub['name']) ?>
+                            <option value="<?= h($pub->id) ?>" <?= chosen('publisher_id', $pub->id) ? "selected" : "" ?>>
+                                <?= h($pub->name) ?>
                             </option>
                         <?php endforeach; ?>
                     </select>
@@ -192,9 +185,9 @@ $formats = [
                         -->
                         <?php foreach ($formats as $format): ?>
                             <label class="checkbox-label">
-                                <input type="checkbox" name="format_ids[]" value="<?= $format['id'] ?>"
-                                    <?= chosen('format_ids', $format['id']) ? 'checked' : '' ?>>
-                                <?= h($format['name']) ?>
+                                <input type="checkbox" id="platform_<?= h($format->id) ?>" name="format_ids[]" value="<?= $format->id ?>"
+                                    <?= chosen('format_ids', $format->id) ? 'checked' : '' ?>>
+                                <?= h($format->name) ?>
                             </label>
                         <?php endforeach; ?>
                     </div>
@@ -232,6 +225,7 @@ $formats = [
                     <label for="cover">Book Cover Image (max 2MB):</label>
                     <!-- NOTE: File inputs cannot be repopulated for security reasons -->
                     <input type="file" id="cover" name="cover" accept="image/*">
+
 
                     <!-- TODO: Display error message if cover validation fails       -->
                     <?php if (error('cover')): ?>
