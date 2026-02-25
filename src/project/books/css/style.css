@@ -190,3 +190,14 @@ form {
 	color: #252525;
 	font-weight: 900;
 }
+.main-content{
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+.main-content .button{
+	justify-content: center;
+	width: 200px;
+	margin: 0 auto;
+}

@@ -19,6 +19,11 @@ try {
     if ($book === null) {
         throw new Exception("Book not found.");
     }
+     $bookFormats = Formats::findByBook($book->id);
+    $bookFormatsIds = [];
+    foreach ($bookFormats as $formatet) {
+        $bookFormatsIds[] = $formatet->id;
+    }
     $publishers = Publisher::findAll();
 $formats = Formats::findAll();
 } catch (PDOException $e) {
@@ -114,7 +119,7 @@ $formats = Formats::findAll();
                             TODO: Use chosen() to repopulate selected option 
                         -->
                         <?php foreach ($publishers as $pub): ?>
-                            <option value="<?= h($pub->id) ?>" <?= chosen('publisher_id', $pub->id) ? "selected" : "" ?>>
+                            <option value="<?= h($pub->id) ?>" <?= chosen('publisher_id', $pub->id, $book->publisher_id) ? "selected" : "" ?>>
                                 <?= h($pub->name) ?>
                             </option>
                         <?php endforeach; ?>
@@ -175,9 +180,10 @@ $formats = Formats::findAll();
                         -->
                         <?php foreach ($formats as $format): ?>
                            <label class="checkbox-label">
-                                <input type="checkbox" id="platform_<?= h($format->id) ?>" name="format_ids[]" value="<?= $format->id ?>"
-                                    <?= chosen('format_ids', $format->id) ? 'checked' : '' ?>>
-                                <?= h($format->name) ?>
+                                <input type="checkbox" id="platform_<?= h($format->id) ?>" name="format_ids[]" value="<?= h($format->id) ?>"
+                                    <?= chosen('format_ids', $format->id,$bookFormatsIds) ? 'checked' : '' ?>>
+                                <!-- <?= h($format->name) ?> -->
+                                <label for="platform_<?= h($format->id) ?>"><?= h($format->name) ?></label>
                             </label>
                         <?php endforeach; ?>
                     </div>

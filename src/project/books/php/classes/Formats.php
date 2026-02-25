@@ -48,24 +48,24 @@ class Formats
     }
 
     // Find platforms by game (requires JOIN with game_platform table)
-    public static function findByGame($gameId)
+    public static function findByBook($bookID)
     {
         $db = DB::getInstance()->getConnection();
         $stmt = $db->prepare("
             SELECT p.*
-            FROM platforms p
-            INNER JOIN game_platform gp ON p.id = gp.platform_id
-            WHERE gp.game_id = :game_id
+            FROM formats p
+            INNER JOIN book_format gp ON p.id = gp.format_id
+            WHERE gp.book_id = :book_id
             ORDER BY p.name
         ");
-        $stmt->execute(['game_id' => $gameId]);
+        $stmt->execute(['book_id' => $bookID]);
 
-        $platforms = [];
+        $formats = [];
         while ($row = $stmt->fetch()) {
-            $platforms[] = new Formats($row);
+            $formats[] = new Formats($row);
         }
 
-        return $platforms;
+        return $formats;
     }
 
     // Convert to array for JSON output

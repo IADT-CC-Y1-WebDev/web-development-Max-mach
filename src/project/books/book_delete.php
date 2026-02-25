@@ -62,7 +62,7 @@ try {
     setFlashMessage('success', 'Book deleted successfully.');
 
     // Redirect to game details page
-    redirect('index.php');
+    redirect('book_list.php');
 } catch (Exception $e) {
     // Set error flash message
     setFlashMessage('error', 'Error: ' . $e->getMessage());

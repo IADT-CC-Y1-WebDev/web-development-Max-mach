@@ -59,12 +59,15 @@ try {
     if (!$book) {
         throw new Exception('Book not found.');
     }
-
-    // $genre = Publisher::findById($data['publisher_id']);
-    // if (!$genre) {
-    //     throw new Exception('Selected genre does not exist.');
-    // }
-    // Process the uploaded image (validation already completed)
+    $publishers = Publisher::findById($data['publisher_id']);
+    if (!$publishers) {
+        throw new Exception('Selected genre does not exist.');
+    }
+    foreach ($data['format_ids'] as $formatId) {
+        if (!Publisher::findById($formatId)) {
+            throw new Exception('One or more selected platforms do not exist.');
+        }
+    }
     $imageFilename = null;
     $uploader = new ImageUpload();
     if ($uploader->hasFile('cover')) {
@@ -90,7 +93,13 @@ try {
 
     // Save to database
     $book->save();
-
+    BookPlatform::deleteByBook($book->id);
+    // Create new platform associations
+    if (!empty($data['format_ids']) && is_array($data['format_ids'])) {
+        foreach ($data['format_ids'] as $formatId) {
+            BookPlatform::create($book->id, $formatId);
+        }
+    }
 
     clearFormData();
     clearFormErrors();
@@ -99,7 +108,7 @@ try {
     setFlashMessage('success', 'Game updated successfully.');
 
     // Redirect to game details page
-    redirect('index.php');
+    redirect('book_list.php');
 } catch (Exception $e) {
     // Error - clean up uploaded image
     if ($imageFilename) {

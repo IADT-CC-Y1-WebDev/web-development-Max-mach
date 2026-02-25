@@ -13,6 +13,21 @@ class Publisher
     }
 
     // Get all publishers
+    public static function findById($id)
+    {
+        $db = DB::getInstance()->getConnection();
+        $stmt = $db->prepare("SELECT * FROM publishers WHERE id = :id");
+        $stmt->execute(['id' => $id]);
+
+        $row = $stmt->fetch();
+        if ($row) {
+            return new Publisher($row);
+        }
+
+        return null;
+    }
+
+
     public static function findAll()
     {
         $db = DB::getInstance()->getConnection();

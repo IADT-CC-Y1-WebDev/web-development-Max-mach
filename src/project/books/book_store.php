@@ -92,12 +92,15 @@ try {
         }
         throw new Exception("Validation failed.");
     }
-    $genre = Genre::findById($data['publisher_id']);
-    if (!$genre) {
+    $publisher_id = Publisher::findById($data['publisher_id']);
+    if (!$publisher_id) {
         throw new Exception('Selected genre does not exist.');
     }
     $uploader = new ImageUpload();
     $imageFilename = $uploader->process($_FILES['cover']);
+    if (!$imageFilename) {
+        throw new Exception('Failed to process and save the image.');
+    }
     // echo "Validation passed";
     $book = new Book();
     $book->title = $data['title'];
@@ -113,7 +116,14 @@ try {
 
     // Save to database
     $book->save();
-
+    if (!empty($data['format_ids']) && is_array($data['format_ids'])) {
+        foreach ($data['format_ids'] as $formatId) {
+            // Verify platform exists before creating relationship
+            if (Formats::findById($formatId)) {
+                BookPlatform::create($book->id, $formatId);
+            }
+        }
+    }
 
     clearFormData();
     clearFormErrors();
@@ -124,7 +134,7 @@ try {
     // TODO: On successful registration, set a success flash message and 
     // redirect back to the form
     setFlashMessage('success', 'Form validated successfully!');
-    redirect("index.php");
+    redirect("book_list.php");
 } catch (Exception $e) {
     // =========================================================================
     // STEP 5: Store Errors and Redirect

@@ -14,7 +14,7 @@ try {
     }
 } catch (PDOException $e) {
     setFlashMessage('error', 'Error: ' . $e->getMessage());
-    redirect('/index.php');
+    redirect('/book_list.php');
 }
 ?>
 <!DOCTYPE html>
@@ -35,7 +35,7 @@ try {
                     <div class="actions">
                         <a href="book_edit.php?id=<?= h($book->id) ?>">Edit</a> /
                         <a href="book_delete.php?id=<?= h($book->id) ?>">Delete</a> /
-                        <a href="index.php">Back</a>
+                        <a href="book_list.php">Back</a>
                     </div>
                 </div>
 
