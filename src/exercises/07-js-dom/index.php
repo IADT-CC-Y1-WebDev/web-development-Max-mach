@@ -19,7 +19,7 @@
   <p>
     See slides for instructions. Put your solutions in the <code>exercises/07-js-dom/</code> folder.
   </p>
-
+  
 
 </body>
 

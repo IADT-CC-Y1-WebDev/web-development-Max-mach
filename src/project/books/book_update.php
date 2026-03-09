@@ -105,7 +105,7 @@ try {
     clearFormErrors();
 
     // Set success flash message
-    setFlashMessage('success', 'Game updated successfully.');
+    setFlashMessage('success', 'Book updated successfully.');
 
     // Redirect to game details page
     redirect('book_list.php');
