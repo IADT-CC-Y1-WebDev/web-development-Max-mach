@@ -1,7 +1,7 @@
 let applyBtn = document.getElementById("apply_filters");
 let clearBTN = document.getElementById("clear_filters");
 let form = document.getElementById("filters");
-let cards = document.querySelectorAll(".cards");
+let cards = document.querySelectorAll(".card");
 applyBtn.addEventListener("click", (e) => {
   e.preventDefault();
   applyFilters();
@@ -12,14 +12,32 @@ clearBTN.addEventListener("click", (e) => {
 });
 
 function applyFilters() {
-  console.log("apply");
   let filters = getFilters();
-  let matches = [];
   for (let i = 0; i < cards.length; i++) {
     let card = cards[i];
-    matches[i] = cardMatches(card, filters);
+    let match = cardMatches(card, filters);
+    card.classList.toggle("hidden", !match);
+    console.log(match);
   }
-  console.log(matches);
+  let cardsArray = Array.from(cards);
+  const sorted = sortCards(cardsArray, filters.sortBy);
+}
+function sortCards(cards, sortBy) {
+  const list = cards.slice();
+  list.sort((a, b) => {
+    let titleA = a.dataset.title.toLowerCase();
+    let titleB = b.dataset.title.toLowerCase();
+    let yearA = Number(a.dataset.year);
+    let yearB = Number(b.dataset.year);
+    if (sortBy === "year_desc") {
+      return yearB - yearA;
+    } else if (sortBy === "year_asc") {
+      return yearA - yearB;
+    } else {
+      return titleA.localeCompare(titleB);
+    }
+  });
+  return list;
 }
 function getFilters() {
   const titleEl = form.elements["title_filter"];
@@ -51,5 +69,14 @@ function matchTitle(card, title) {
   return match;
 }
 function cardMatches(card, filter) {
-  return card.dataset.title.toLowerCase().includes(filter.titleFilter);
+  let title = card.dataset.title.toLowerCase();
+  let genre = card.dataset.genre;
+  let platform = card.dataset.platform;
+
+  let matchTitle =
+    filter.titleFilter === "" || title.includes(filter.titleFilter);
+  let matchGenre = filter.genreFilter === "" || genre === filter.genreFilter;
+  let matchPlatform =
+    filter.platformFilter === "" || platform.includes(filter.platformFilter);
+  return matchTitle && matchGenre && matchPlatform;
 }

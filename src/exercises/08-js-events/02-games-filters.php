@@ -1,6 +1,6 @@
 <?php
 $games = [
-    ['title' => 'Elden Ring', 'genre' => 'RPG', 'platform' => 'PC', 'year' => 2022],
+    ['title' => 'Elden Ring', 'genre' => 'RPG', 'platform' => 'PC PS5', 'year' => 2022],
     ['title' => 'FIFA 23', 'genre' => 'Sports', 'platform' => 'PS5', 'year' => 2022],
     ['title' => 'Portal 2', 'genre' => 'Puzzle', 'platform' => 'PC', 'year' => 2011],
     ['title' => 'Cities: Skylines II', 'genre' => 'Simulation', 'platform' => 'PC', 'year' => 2023],
