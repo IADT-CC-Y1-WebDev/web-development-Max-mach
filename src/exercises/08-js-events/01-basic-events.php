@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,9 +15,11 @@
             border-radius: 8px;
             margin-top: 1rem;
         }
+
         #box.hidden {
             display: none;
         }
+
         #preview {
             padding: 0.5rem;
             border-radius: 4px;
@@ -24,12 +27,14 @@
             margin-top: 0.5rem;
             min-height: 1.5rem;
         }
+
         #preview.empty {
             color: #888;
             font-style: italic;
         }
     </style>
 </head>
+
 <body>
     <div class="back-link">
         <a href="index.php">&larr; Back to 08 Overview</a>
@@ -56,5 +61,5 @@
 
     <script src="01-basic-events.js"></script>
 </body>
-</html>
 
+</html>

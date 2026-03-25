@@ -1,16 +1,16 @@
 <?php
 $games = [
-    ['title' => 'Elden Ring', 'genre' => 'RPG', 'platform' => 'PC PS5', 'year' => 2022],
-    ['title' => 'FIFA 23', 'genre' => 'Sports', 'platform' => 'PS5', 'year' => 2022],
-    ['title' => 'Portal 2', 'genre' => 'Puzzle', 'platform' => 'PC', 'year' => 2011],
-    ['title' => 'Cities: Skylines II', 'genre' => 'Simulation', 'platform' => 'PC', 'year' => 2023],
-    ['title' => 'The Witcher 3: Wild Hunt', 'genre' => 'RPG', 'platform' => 'PC', 'year' => 2015],
-    ['title' => 'The Last of Us Part II', 'genre' => 'Action', 'platform' => 'PS5', 'year' => 2020],
-    ['title' => 'The Legend of Zelda: Breath of the Wild', 'genre' => 'Action-Adventure', 'platform' => 'Nintendo Switch', 'year' => 2017],
-    ['title' => 'The Elder Scrolls V: Skyrim', 'genre' => 'RPG', 'platform' => 'PC', 'year' => 2011],
-    ['title' => 'The Sims 4', 'genre' => 'Simulation', 'platform' => 'PC', 'year' => 2014],
+    ['title' => 'The Silent Observatory', 'author' => 'Clara Whitmore', 'year' => 1998],
+    ['title' => 'Ashes of Tomorrow', 'author' => 'Daniel K. Reeves', 'year' => 2007],
+    ['title' => 'The Clockmaker’s Secret', 'author' => 'Elena Marquez', 'year' => 1985],
+    ['title' => 'A Map of Forgotten Places', 'author' => 'Jonah Pierce', 'year' => 2016],
+    ['title' => 'Whispers in the Fog', 'author' => 'Lydia Chen', 'year' => 2003],
+    ['title' => 'The Last Ember', 'author' => 'Marcus Holloway', 'year' => 1992],
+    ['title' => 'Paper Stars', 'author' => 'Amelia Brooks', 'year' => 2021],
+    ['title' => 'Beneath Crimson Skies', 'author' => 'Victor Salazar', 'year' => 2010],
+    ['title' => 'The Glass Library', 'author' => 'Sophie Laurent', 'year' => 1999],
 ];
-$genres = ['RPG', 'Sports', 'Puzzle', 'Simulation', 'Action', 'Action-Adventure'];
+$authors = ['Clara Whitmore', 'Daniel K. Reeves', 'Elena Marquez', 'Jonah Pierce', 'Lydia Chen', 'Action-Adventure'];
 $platforms = ['PC', 'PS5', 'Xbox', 'Nintendo Switch'];
 ?>
 <!DOCTYPE html>
@@ -99,39 +99,32 @@ $platforms = ['PC', 'PS5', 'Xbox', 'Nintendo Switch'];
                 <input type="text" id="title_filter" name="title_filter" placeholder="Part of a title">
             </div>
         </div>
-        <div class="input">
-            <label class="filter-label" for="genre_filter">Genre:</label>
+        <!-- <div class="input">
+            <label class="filter-label" for="author_filter">Genre:</label>
             <div>
-                <select id="genre_filter" name="genre_filter">
-                    <option value="">All Genres</option>
-                    <?php foreach ($genres as $genre): ?>
-                        <option value="<?= htmlspecialchars($genre) ?>">
-                            <?= htmlspecialchars($genre) ?>
+                <select id="author_filter" name="author_filter">
+                    <option value="">All Authors</option>
+                    <?php foreach ($authors as $author): ?>
+                        <option value="<?= htmlspecialchars($author) ?>">
+                            <?= htmlspecialchars($author) ?>
                         </option>
                     <?php endforeach; ?>
                 </select>
             </div>
-        </div>
+        </div> -->
         <div class="input">
-            <label class="filter-label" for="platform_filter">Platform:</label>
+            <label class="filter-label" for="author_filter">Author:</label>
             <div>
-                <select id="platform_filter" name="platform_filter">
-                    <option value="">All Platforms</option>
-                    <?php foreach ($platforms as $platform): ?>
-                        <option value="<?= htmlspecialchars($platform) ?>">
-                            <?= htmlspecialchars($platform) ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
+                <input type="text" id="author_filter" name="author_filter" placeholder="Part of a title">
             </div>
         </div>
         <div class="input">
             <label class="filter-label" for="sort_by">Sort:</label>
             <div>
-                <select id="sort_by" name="sort_by">
-                    <option value="title_asc">Title A–Z</option>
-                    <option value="year_desc">Year (newest first)</option>
-                    <option value="year_asc">Year (oldest first)</option>
+                <select name="sort_by" id="sort_by">
+                    <option value="all">All years</option>
+                    <option value="before_2000">Before 2000</option>
+                    <option value="2000_and_later">2000 and later</option>
                 </select>
             </div>
         </div>
@@ -147,16 +140,18 @@ $platforms = ['PC', 'PS5', 'Xbox', 'Nintendo Switch'];
     <div id="game_cards" class="cards">
         <?php foreach ($games as $game): ?>
             <div class="card" data-title="<?= htmlspecialchars($game['title']) ?>"
-                data-genre="<?= htmlspecialchars($game['genre']) ?>"
-                data-platform="<?= htmlspecialchars($game['platform']) ?>" data-year="<?= $game['year'] ?>">
-                <h3><?= htmlspecialchars($game['title']) ?></h3>
-                <p><?= htmlspecialchars($game['genre']) ?> · <?= htmlspecialchars($game['platform']) ?>
-                    (<?= (int) $game['year'] ?>)</p>
+                data-author="<?= htmlspecialchars($game['author']) ?>" data-year="<?= $game['year'] ?>">
+                <h3>
+                    <?= htmlspecialchars($game['title']) ?>
+                </h3>
+                <p>
+                    <?= htmlspecialchars($game['author']) ?> (<?= (int) $game['year'] ?>)
+                </p>
             </div>
         <?php endforeach; ?>
     </div>
 
-    <script src="02-games-filters.js"></script>
+    <script src="books-filters.js"></script>
 </body>
 
 </html>
