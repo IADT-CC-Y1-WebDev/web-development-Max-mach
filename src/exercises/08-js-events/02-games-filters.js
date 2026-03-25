@@ -2,6 +2,7 @@ let applyBtn = document.getElementById("apply_filters");
 let clearBTN = document.getElementById("clear_filters");
 let form = document.getElementById("filters");
 let cards = document.querySelectorAll(".card");
+let cardsContainer = document.getElementById("game_cards");
 applyBtn.addEventListener("click", (e) => {
   e.preventDefault();
   applyFilters();
@@ -21,6 +22,9 @@ function applyFilters() {
   }
   let cardsArray = Array.from(cards);
   const sorted = sortCards(cardsArray, filters.sortBy);
+  sorted.forEach((card) => {
+    cardsContainer.appendChild(card);
+  });
 }
 function sortCards(cards, sortBy) {
   const list = cards.slice();
@@ -29,13 +33,10 @@ function sortCards(cards, sortBy) {
     let titleB = b.dataset.title.toLowerCase();
     let yearA = Number(a.dataset.year);
     let yearB = Number(b.dataset.year);
-    if (sortBy === "year_desc") {
-      return yearB - yearA;
-    } else if (sortBy === "year_asc") {
-      return yearA - yearB;
-    } else {
-      return titleA.localeCompare(titleB);
-    }
+    if (sortBy === "year_desc") return yearB - yearA;
+    if (sortBy === "year_asc") return yearA - yearB;
+
+    return titleA.localeCompare(titleB);
   });
   return list;
 }
@@ -48,17 +49,26 @@ function getFilters() {
   let titleFilter = (titleEl.value || "").trim().toLowerCase();
   let genreFilter = genreEl.value || "";
   let platformFilter = platformEl.value || "";
-  let sortFilter = sortEl.value || "title_asc";
+  let sortBy = sortEl.value || "title_asc";
 
   return {
     titleFilter: titleFilter,
     genreFilter: genreFilter,
     platformFilter: platformFilter,
-    sortFilter: sortFilter,
+    sortBy: sortBy,
   };
 }
 function clearFilters() {
-  console.log("clear");
+  form.reset();
+  cards.forEach((card) => {
+    card.classList.toggle("hidden");
+  });
+
+  let cardsArray = Array.from(cards);
+  const sorted = sortCards(cardsArray, "title");
+  sorted.forEach((card) => {
+    cardsContainer.appendChild(card);
+  });
 }
 function matchTitle(card, title) {
   const ttl = title.toLowerCase();
