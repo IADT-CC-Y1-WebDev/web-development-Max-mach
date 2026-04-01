@@ -52,7 +52,7 @@ try {
                     <p>Description:<br />
                         <?= nl2br(htmlspecialchars($book->description)) ?>
                     </p>
-                     <p>Isbn:<br />
+                    <p>Isbn:<br />
                         <?= nl2br(htmlspecialchars($book->isbn)) ?>
                     </p>
                 </div>

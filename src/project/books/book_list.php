@@ -24,33 +24,19 @@ try {
                 <a href="book_create.php">Add New Book</a>
             </div>
         </div>
-        <?php if (!empty($games)) { ?>
+        <?php if (!empty($books)) { ?>
             <div class="width-12 filters">
-                <form>
+                <form id="filters" class="filters">
                     <div>
                         <label for="title_filter">Title:</label>
                         <input type="text" id="title_filter" name="title_filter">
                     </div>
                     <div>
-                        <label for="genre_filter">Genre:</label>
-                        <select id="genre_filter" name="genre_filter">
-                            <option value="">All Genres</option>
-                            <?php foreach ($genres as $genre) { ?>
-                                <option value="<?= h($genre->id) ?>">
-                                    <?= h($genre->name) ?>
-                                </option>
-                            <?php } ?>
-                        </select>
-                    </div>
-                    <div>
-                        <label for="platform_filter">Platform:</label>
-                        <select id="platform_filter" name="platform_filter">
-                            <option value="">All Platforms</option>
-                            <?php foreach ($platforms as $platform) { ?>
-                                <option value="<?= h($platform->id) ?>">
-                                    <?= h($platform->name) ?>
-                                </option>
-                            <?php } ?>
+                        <label for="sort_by">Year:</label>
+                        <select id="sort_by" name="sort_by">
+                            <option value="all">All Years</option>
+                            <option value="before_2000">Before 2000</option>
+                            <option value="2000_and_later">2000 and later</option>
                         </select>
                     </div>
                     <div>
@@ -65,12 +51,13 @@ try {
         <?php if (empty($books)) { ?>
             <p>No games found.</p>
         <?php } else { ?>
-            <div class="width-12 cards">
+            <div id="book-cards" class="width-12 cards">
                 <?php foreach ($books as $book) { ?>
-                    <div class="card">
+                    <div class="card" data-title="<?= htmlspecialchars($book->title) ?>" data-year="<?= $book->year ?>">
                         <div class="top-content">
                             <h2>Title:
-                                <?= h($book->title) ?>
+                                <!-- <?= h($book->title) ?> -->
+                                <?= h(htmlspecialchars($book->title)) ?>
                             </h2>
                             <p>Author:
                                 <?= h($book->author) ?>
@@ -79,12 +66,12 @@ try {
                                 <?= h($book->isbn) ?>
                             </p>
                             <p>Year:
-                                <?= h($book->year) ?>
+                                <!-- <?= h($book->year) ?> -->
+                                <?= (int) $book->year ?>
                             </p>
                             <p>Description:
                                 <?= h($book->description) ?>
                             </p>
-                            <p></p>
                         </div>
                         <div class="bottom-content">
                             <img src="images/<?= h($book->cover_filename) ?>" alt="Image for <?= h($book->title) ?>" />
@@ -99,6 +86,7 @@ try {
             </div>
         <?php } ?>
     </div>
+    <script src="./js/books-filters.js"></script>
 </body>
 
 </html>

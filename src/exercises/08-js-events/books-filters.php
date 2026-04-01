@@ -99,19 +99,6 @@ $platforms = ['PC', 'PS5', 'Xbox', 'Nintendo Switch'];
                 <input type="text" id="title_filter" name="title_filter" placeholder="Part of a title">
             </div>
         </div>
-        <!-- <div class="input">
-            <label class="filter-label" for="author_filter">Genre:</label>
-            <div>
-                <select id="author_filter" name="author_filter">
-                    <option value="">All Authors</option>
-                    <?php foreach ($authors as $author): ?>
-                        <option value="<?= htmlspecialchars($author) ?>">
-                            <?= htmlspecialchars($author) ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
-        </div> -->
         <div class="input">
             <label class="filter-label" for="author_filter">Author:</label>
             <div>
