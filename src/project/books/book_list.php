@@ -29,14 +29,14 @@ try {
                 <form id="filters" class="filters">
                     <div>
                         <label for="title_filter">Title:</label>
-                        <input type="text" id="title_filter" name="title_filter">
+                        <input type="text" id="title_filter" name="title_filter" placeholder="Title">
                     </div>
                     <div>
                         <label for="sort_by">Year:</label>
                         <select id="sort_by" name="sort_by">
                             <option value="all">All Years</option>
-                            <option value="before_2000">Before 2000</option>
-                            <option value="2000_and_later">2000 and later</option>
+                            <option value="before">Before 2000</option>
+                            <option value="later">2000 and later</option>
                         </select>
                     </div>
                     <div>

@@ -17,20 +17,27 @@ function applyFilters() {
   for (let i = 0; i < cards.length; i++) {
     let card = cards[i];
     let match = cardMatches(card, filters);
-    card.classList.toggle("hidden", !match);
-    console.log(match);
+    // card.classList.toggle("hidden", !match);
+    if (!match) {
+      card.classList.add("hidden");
+    } else {
+      card.classList.remove("hidden");
+    }
   }
   let cardsArray = Array.from(cards);
-  const sorted = sortCards(cardsArray, filters.sortBy);
+  const sorted = sortCards(cardsArray, filters.yearFilter);
   sorted.forEach((card) => {
     cardsContainer.appendChild(card);
   });
 }
-function sortCards(cards) {
+function sortCards(cards, sortBy) {
   const list = cards.slice();
   list.sort((a, b) => {
     let titleA = a.dataset.title.toLowerCase();
     let titleB = b.dataset.title.toLowerCase();
+    let yearA = Number(a.dataset.year);
+    let yearB = Number(b.dataset.year);
+    if (sortBy === "before" || sortBy === "later") return yearA - yearB;
     return titleA.localeCompare(titleB);
   });
   return list;
@@ -52,23 +59,18 @@ function getFilters() {
 }
 function clearFilters() {
   form.reset();
+  // cards.forEach((card) => {
+  //   card.classList.toggle("hidden");
+  // });
   cards.forEach((card) => {
-    card.classList.toggle("hidden");
+    card.classList.remove("hidden");
   });
 
   let cardsArray = Array.from(cards);
-  const sorted = sortCards(cardsArray, "title");
+  const sorted = sortCards(cardsArray, "all");
   sorted.forEach((card) => {
     cardsContainer.appendChild(card);
   });
-}
-function matchTitle(card, title) {
-  const ttl = title.toLowerCase();
-  let match = false;
-  if (card.dataset.title.includes(title)) {
-    match = true;
-  }
-  return match;
 }
 function cardMatches(card, filter) {
   let title = card.dataset.title.toLowerCase();
@@ -83,10 +85,10 @@ function cardMatches(card, filter) {
     yearMatch = year;
   }
 
-  if (filter.yearFilter === "before_2000") {
+  if (filter.yearFilter === "before") {
     yearMatch = year < 2000;
   }
-  if (filter.yearFilter === "2000_and_later") {
+  if (filter.yearFilter === "later") {
     yearMatch = year >= 2000;
   }
   return matchTitle && matchAuthor && yearMatch;

@@ -110,8 +110,8 @@ $platforms = ['PC', 'PS5', 'Xbox', 'Nintendo Switch'];
             <div>
                 <select name="sort_by" id="sort_by">
                     <option value="all">All years</option>
-                    <option value="before_2000">Before 2000</option>
-                    <option value="2000_and_later">2000 and later</option>
+                    <option value="before">Before 2000</option>
+                    <option value="later">2000 and later</option>
                 </select>
             </div>
         </div>

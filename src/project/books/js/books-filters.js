@@ -1,4 +1,3 @@
-console.log("bobi");
 let applyBtn = document.getElementById("apply_filters");
 let clearBTN = document.getElementById("clear_filters");
 let form = document.getElementById("filters");
@@ -25,7 +24,7 @@ function applyFilters() {
     }
   }
   let cardsArray = Array.from(cards);
-  const sorted = sortCards(cardsArray, filters.sortBy);
+  const sorted = sortCards(cardsArray, filters.yearFilter);
   sorted.forEach((card) => {
     cardsContainer.appendChild(card);
   });
@@ -35,7 +34,9 @@ function sortCards(cards, sortBy) {
   list.sort((a, b) => {
     let titleA = a.dataset.title.toLowerCase();
     let titleB = b.dataset.title.toLowerCase();
-    if (sortBy === "all") return yearB - yearA;
+    let yearA = Number(a.dataset.year);
+    let yearB = Number(b.dataset.year);
+    if (sortBy === "before" || sortBy === "later") return yearA - yearB;
     return titleA.localeCompare(titleB);
   });
   return list;
@@ -58,7 +59,7 @@ function clearFilters() {
     card.classList.remove("hidden");
   });
   let cardsArray = Array.from(cards);
-  const sorted = sortCards(cardsArray, "title");
+  const sorted = sortCards(cardsArray, "all");
   sorted.forEach((card) => {
     cardsContainer.appendChild(card);
   });
@@ -72,10 +73,10 @@ function cardMatches(card, filter) {
   if (filter.yearFilter === "all") {
     yearMatch = year;
   }
-  if (filter.yearFilter === "before_2000") {
+  if (filter.yearFilter === "before") {
     yearMatch = year < 2000;
   }
-  if (filter.yearFilter === "2000_and_later") {
+  if (filter.yearFilter === "later") {
     yearMatch = year >= 2000;
   }
   return matchTitle && yearMatch;

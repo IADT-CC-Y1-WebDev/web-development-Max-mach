@@ -54,7 +54,7 @@ try {
         </div>
         <div class="width-12">
             <div class="back-link">
-                <a href="index.php">&larr; Back to Form Handling </a>
+                <a href="book_list.php">&larr; Back to Form Handling </a>
             </div>
         </div>
         <div class="width-12">
@@ -66,8 +66,9 @@ try {
 
         </div>
         <div class="width-12">
-            <form action="book_store.php" method="POST" enctype="multipart/form-data">
+            <form action="book_store.php" method="POST" enctype="multipart/form-data" id="book_form">
 
+                <div id="error_summary_top" class="error-summary" style="display:none" role="alert"></div>
                 <!-- =============================================================== -->
                 <!-- Book Title Field                                                -->
                 <!-- =============================================================== -->
@@ -90,6 +91,7 @@ try {
                             <?= error('title') ?>
                         </p>
                     <?php endif; ?>
+                    <span id="title_error" class="error"></span>
 
                 </div>
 
@@ -107,6 +109,7 @@ try {
                             <?= error('author') ?>
                         </p>
                     <?php endif; ?>
+                    <span id="author_error" class="error"></span>
                 </div>
 
                 <!-- =============================================================== -->
@@ -136,6 +139,7 @@ try {
                             <?= error('publisher_id') ?>
                         </p>
                     <?php endif; ?>
+                    <span id="publisher_id_error" class="error"></span>
                 </div>
 
                 <!-- =============================================================== -->
@@ -152,6 +156,7 @@ try {
                             <?= error('year') ?>
                         </p>
                     <?php endif; ?>
+                    <span id="year_error" class="error"></span>
                 </div>
 
                 <!-- =============================================================== -->
@@ -168,6 +173,7 @@ try {
                             <?= error('isbn') ?>
                         </p>
                     <?php endif; ?>
+                    <span id="isbn_error" class="error"></span>
                 </div>
 
                 <!-- =============================================================== -->
@@ -185,8 +191,8 @@ try {
                         -->
                         <?php foreach ($formats as $format): ?>
                             <label class="checkbox-label">
-                                <input type="checkbox" id="platform_<?= h($format->id) ?>" name="format_ids[]" value="<?= $format->id ?>"
-                                    <?= chosen('format_ids', $format->id) ? 'checked' : '' ?>>
+                                <input type="checkbox" id="platform_<?= h($format->id) ?>" class="platform_id"
+                                    name="format_ids[]" value="<?= $format->id ?>" <?= chosen('format_ids', $format->id) ? 'checked' : '' ?>>
                                 <?= h($format->name) ?>
                             </label>
                         <?php endforeach; ?>
@@ -198,6 +204,7 @@ try {
                             <?= error('format_ids') ?>
                         </p>
                     <?php endif; ?>
+                    <span id="format_ids_error" class="error"></span>
 
                 </div>
 
@@ -215,6 +222,7 @@ try {
                             <?= error('description') ?>
                         </p>
                     <?php endif; ?>
+                    <span id="description_error" class="error"></span>
                 </div>
 
                 <!-- =============================================================== -->
@@ -233,14 +241,14 @@ try {
                             <?= error('cover') ?>
                         </p>
                     <?php endif; ?>
-
+                    <span id="cover_error" class="error"></span>
                 </div>
 
                 <!-- =============================================================== -->
                 <!-- Submit Button                                                   -->
                 <!-- =============================================================== -->
                 <div class="form-group">
-                    <button type="submit" class="button">Save Book</button>
+                    <button type="submit" id="submit_btn" class="button">Save Book</button>
                 </div>
             </form>
         </div>
@@ -259,6 +267,7 @@ try {
     // Clear errors after displaying
     clearFormErrors();
     ?>
+    <script src="./js/book-form-validation.js"></script>
 </body>
 
 </html>
