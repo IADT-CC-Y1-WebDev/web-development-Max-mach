@@ -11,7 +11,6 @@ clearBTN.addEventListener("click", (e) => {
   e.preventDefault();
   clearFilters();
 });
-
 function applyFilters() {
   let filters = getFilters();
   for (let i = 0; i < cards.length; i++) {
@@ -44,13 +43,16 @@ function sortCards(cards, sortBy) {
 function getFilters() {
   const titleEl = form.elements["title_filter"];
   const yearEl = form.elements["sort_by"];
+  const publisherEl = form.elements["sort_publisher"];
 
   let titleFilter = (titleEl.value || "").trim().toLowerCase();
   let yearFilter = yearEl.value || "all";
+  let publisherFilter = publisherEl.value || "all_publisher";
 
   return {
     titleFilter: titleFilter,
     yearFilter: yearFilter,
+    publisherFilter: publisherFilter,
   };
 }
 function clearFilters() {
@@ -67,9 +69,14 @@ function clearFilters() {
 function cardMatches(card, filter) {
   let title = card.dataset.title.toLowerCase();
   let year = Number(card.dataset.year);
+  let publisher = card.dataset.publisher;
+
   let yearMatch;
 
   let matchTitle = !filter.titleFilter || title.includes(filter.titleFilter);
+
+  let matchPlatform =
+    filter.publisherFilter === "" || publisher.includes(filter.publisherFilter);
   if (filter.yearFilter === "all") {
     yearMatch = year;
   }
@@ -79,5 +86,5 @@ function cardMatches(card, filter) {
   if (filter.yearFilter === "later") {
     yearMatch = year >= 2000;
   }
-  return matchTitle && yearMatch;
+  return matchTitle && yearMatch && matchPlatform;
 }

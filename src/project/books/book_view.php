@@ -9,8 +9,17 @@ $id = $_GET['id'];
 
 try {
     $book = Book::findById($id);
+    $publisher = Publisher::findById($book->publisher_id);
+    $formats = Formats::findByBook($book->id);
+    $formatNames = [];
+    foreach ($formats as $format) {
+        $formatNames[] = htmlspecialchars($format->name);
+    }
     if ($book === null) {
         die("<p>Error: Book not found.</p>");
+    }
+    if ($publisher === null) {
+        die("<p>Error: Publisher not found.</p>");
     }
 } catch (PDOException $e) {
     setFlashMessage('error', 'Error: ' . $e->getMessage());
@@ -45,6 +54,12 @@ try {
                     </h2>
                     <p>Author:
                         <?= htmlspecialchars($book->author) ?>
+                    </p>
+                    <p>Publisher:
+                        <?= htmlspecialchars($publisher->name) ?>
+                    </p>
+                    <p>Format:
+                        <?= implode(', ', $formatNames) ?>
                     </p>
                     <p>Year:
                         <?= htmlspecialchars($book->year) ?>

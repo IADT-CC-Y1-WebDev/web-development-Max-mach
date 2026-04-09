@@ -4,6 +4,7 @@ require_once 'php/lib/utils.php';
 
 try {
     $books = Book::findAll();
+    $publishers = Publisher::findAll();
 } catch (PDOException $e) {
     die("<p>PDO Exception: " . $e->getMessage() . "</p>");
 }
@@ -32,6 +33,15 @@ try {
                         <input type="text" id="title_filter" name="title_filter" placeholder="Title">
                     </div>
                     <div>
+                        <label for="sort_publisher">Publisher:</label>
+                        <select id="sort_publisher" name="sort_publisher">
+                            <option value="all_publisher">All publishers</option>
+                            <?php foreach ($publishers as $publisher) { ?>
+                                <option value="<?= $publisher->id ?>"><?= $publisher->name ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                    <div>
                         <label for="sort_by">Year:</label>
                         <select id="sort_by" name="sort_by">
                             <option value="all">All Years</option>
@@ -53,7 +63,9 @@ try {
         <?php } else { ?>
             <div id="book-cards" class="width-12 cards">
                 <?php foreach ($books as $book) { ?>
-                    <div class="card" data-title="<?= htmlspecialchars($book->title) ?>" data-year="<?= $book->year ?>">
+                    <div class="card" data-title="<?= htmlspecialchars($book->title) ?>" data-year="<?= $book->year ?>"
+                        data-publisher="
+                        <?= $book->publisher_id ?>">
                         <div class="top-content">
                             <h2>Title:
                                 <!-- <?= h($book->title) ?> -->
@@ -65,6 +77,7 @@ try {
                             <p>ISBN:
                                 <?= h($book->isbn) ?>
                             </p>
+                            <p></p>
                             <p>Year:
                                 <!-- <?= h($book->year) ?> -->
                                 <?= (int) $book->year ?>
