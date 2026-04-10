@@ -5,6 +5,7 @@ require_once 'php/lib/utils.php';
 try {
     $books = Book::findAll();
     $publishers = Publisher::findAll();
+    $formats = Formats::findAll();
 } catch (PDOException $e) {
     die("<p>PDO Exception: " . $e->getMessage() . "</p>");
 }
@@ -42,6 +43,18 @@ try {
                         </select>
                     </div>
                     <div>
+                        <label for="sort_formats">Formats:</label>
+                        <select id="sort_formats" name="sort_formats">
+                            <option value="all_formats">All Formats</option>
+                            <?php foreach ($formats as $format) { ?>
+                                <option value="<?= $format->id ?>">
+                                    <?= $format->name ?>
+                                </option>
+                            <?php } ?>
+                        </select>
+
+                    </div>
+                    <div>
                         <label for="sort_by">Year:</label>
                         <select id="sort_by" name="sort_by">
                             <option value="all">All Years</option>
@@ -63,9 +76,15 @@ try {
         <?php } else { ?>
             <div id="book-cards" class="width-12 cards">
                 <?php foreach ($books as $book) { ?>
+                    <?php $formates = Formats::findByBook($book->id);
+                    $formatNames = [];
+                    foreach ($formates as $format) {
+                        $formatNames[] = $format->id;
+                    } ?>
                     <div class="card" data-title="<?= htmlspecialchars($book->title) ?>" data-year="<?= $book->year ?>"
                         data-publisher="
-                        <?= $book->publisher_id ?>">
+                        <?= $book->publisher_id ?>" data-formats="
+                         <?= implode(', ', $formatNames) ?>">
                         <div class="top-content">
                             <h2>Title:
                                 <!-- <?= h($book->title) ?> -->

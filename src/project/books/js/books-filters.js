@@ -44,15 +44,18 @@ function getFilters() {
   const titleEl = form.elements["title_filter"];
   const yearEl = form.elements["sort_by"];
   const publisherEl = form.elements["sort_publisher"];
+  const formatsEL = form.elements["sort_formats"];
 
   let titleFilter = (titleEl.value || "").trim().toLowerCase();
   let yearFilter = yearEl.value || "all";
   let publisherFilter = publisherEl.value || "all_publisher";
+  let formatsFilter = formatsEL.value || "all_formats";
 
   return {
     titleFilter: titleFilter,
     yearFilter: yearFilter,
     publisherFilter: publisherFilter,
+    formatsFilter: formatsFilter,
   };
 }
 function clearFilters() {
@@ -70,13 +73,18 @@ function cardMatches(card, filter) {
   let title = card.dataset.title.toLowerCase();
   let year = Number(card.dataset.year);
   let publisher = card.dataset.publisher;
+  let formats = card.dataset.formats;
 
   let yearMatch;
 
   let matchTitle = !filter.titleFilter || title.includes(filter.titleFilter);
 
-  let matchPlatform =
-    filter.publisherFilter === "" || publisher.includes(filter.publisherFilter);
+  let matchPublisher =
+    filter.publisherFilter === "all_publisher" ||
+    publisher.includes(filter.publisherFilter);
+  let matchFormats =
+    filter.formatsFilter === "all_formats" ||
+    formats.includes(filter.formatsFilter);
   if (filter.yearFilter === "all") {
     yearMatch = year;
   }
@@ -86,5 +94,5 @@ function cardMatches(card, filter) {
   if (filter.yearFilter === "later") {
     yearMatch = year >= 2000;
   }
-  return matchTitle && yearMatch && matchPlatform;
+  return matchTitle && yearMatch && matchPublisher && matchFormats;
 }
