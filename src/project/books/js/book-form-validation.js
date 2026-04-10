@@ -64,7 +64,7 @@ function onSubmitForm(e) {
   const stringCheck = /^[A-Za-z ]+$/;
   const isbnCheck = /^[0-9]{13}$/;
   const yearCheck = /^(19|20)[0-9]{2}$/;
-  const descCheck = /^[A-Za-z0-9\s.,'"\-!?()]{10,300}$/;
+  const descCheck = /^[A-Za-z0-9\s.,'"\-!?()]{30,300}$/;
 
   let title = nameInput.value.trim();
 
@@ -72,6 +72,8 @@ function onSubmitForm(e) {
     addError("name", "Title is required");
   } else if (!stringCheck.test(title)) {
     addError("name", "Title can contain only letter and spaces");
+  } else if (title.length <= 5) {
+    addError("name", "The title must be at least 5 characters long");
   }
 
   let author = authorInput.value.trim();
@@ -79,7 +81,10 @@ function onSubmitForm(e) {
     addError("author", "Author is required");
   } else if (!stringCheck.test(author)) {
     addError("author", "Author can contain only letter and spaces");
+  } else if (author.length <= 5) {
+    addError("author", "The author must be at least 5 characters long");
   }
+
   let year = yearInput.value.trim();
   if (year == "") {
     addError("year", "Year is required");
@@ -113,7 +118,10 @@ function onSubmitForm(e) {
   if (description == "") {
     addError("description", "Description is required");
   } else if (!descCheck.test(description)) {
-    addError("description", "Description min is 10 letters");
+    addError(
+      "description",
+      "The description must be at least 30 characters long",
+    );
   }
 
   console.log(title.length);
