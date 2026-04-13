@@ -61,10 +61,12 @@ function onSubmitForm(e) {
   errors = {};
   console.log(nameInput.value);
 
-  const stringCheck = /^[A-Za-z ]+$/;
-  const isbnCheck = /^[0-9]{13}$/;
-  const yearCheck = /^(19|20)[0-9]{2}$/;
-  const descCheck = /^[A-Za-z0-9\s.,'"\-!?()]{30,300}$/;
+  let year_date = new Date().getFullYear();
+  console.log(year_date);
+
+  const stringCheck = /^[A-Za-z. ]+$/;
+  const isbnCheck = /^\d[\d-]{11,}\d$/;
+  const descCheck = /^[A-Za-z0-9\s.,'"\-!?()]{10,300}$/;
 
   let title = nameInput.value.trim();
 
@@ -88,8 +90,11 @@ function onSubmitForm(e) {
   let year = yearInput.value.trim();
   if (year == "") {
     addError("year", "Year is required");
-  } else if (!yearCheck.test(year)) {
-    addError("year", "Year can contain only numbers and years from (1900)");
+  } else if (year < 1900 || year > year_date) {
+    addError(
+      "year",
+      "Year can not be less than 1900 and more than " + year_date,
+    );
   }
   let publisher = publisherInput.value.trim();
   if (publisher == "") {
@@ -120,7 +125,7 @@ function onSubmitForm(e) {
   } else if (!descCheck.test(description)) {
     addError(
       "description",
-      "The description must be at least 30 characters long",
+      "The description must be at least 10 and more than 300 characters long",
     );
   }
 
