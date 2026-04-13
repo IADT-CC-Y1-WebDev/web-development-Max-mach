@@ -125,7 +125,7 @@ function onSubmitForm(e) {
   } else if (!descCheck.test(description)) {
     addError(
       "description",
-      "The description must be at least 10 and more than 300 characters long",
+      "The description must be at least 10 and not more than 300 characters long",
     );
   }
 

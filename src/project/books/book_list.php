@@ -22,9 +22,9 @@ try {
     <div class="container">
         <div class="width-12 header">
             <?php require 'php/inc/flash_message.php'; ?>
-            <div class="button">
-                <a href="book_create.php">Add New Book</a>
-            </div>
+            <a href="book_create.php"><div class="button">
+                Add New Book
+            </div></a>
         </div>
         <?php if (!empty($books)) { ?>
             <div class="width-12 filters">
@@ -86,9 +86,8 @@ try {
                         <?= $book->publisher_id ?>" data-formats="
                          <?= implode(', ', $formatNames) ?>">
                         <div class="top-content">
-                            <h2>Title:
-                                <!-- <?= h($book->title) ?> -->
-                                <?= h(htmlspecialchars($book->title)) ?>
+                            <h2>
+                                <?= h($book->title) ?>
                             </h2>
                             <p>Author:
                                 <?= h($book->author) ?>
