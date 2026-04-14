@@ -42,7 +42,7 @@ try {
                             <?php } ?>
                         </select>
                     </div>
-                    <div>
+                    <!-- <div>
                         <label for="sort_formats">Formats:</label>
                         <select id="sort_formats" name="sort_formats">
                             <option value="all_formats">All Formats</option>
@@ -52,8 +52,27 @@ try {
                                 </option>
                             <?php } ?>
                         </select>
+                    
+                    </div> -->
 
+
+
+                    <div >
+                         <?php foreach ($formats as $format) { ?>
+                      <input 
+                        type="checkbox"
+                        id="format_<?= $format->id ?>"
+                        name="formats[]"
+                        value="<?= $format->id ?>"
+                        />
+
+                        <label for="format_<?= $format->id ?>">
+                         <?= $format->name ?>
+                        </label>
+                        <?php } ?>
                     </div>
+
+
                     <div>
                         <label for="sort_by">Year:</label>
                         <select id="sort_by" name="sort_by">
@@ -83,8 +102,7 @@ try {
                     } ?>
                     <div class="card" data-title="<?= htmlspecialchars($book->title) ?>" data-year="<?= $book->year ?>"
                         data-publisher="
-                        <?= $book->publisher_id ?>" data-formats="
-                         <?= implode(', ', $formatNames) ?>">
+                        <?= $book->publisher_id ?>" data-formats="<?= implode(', ', $formatNames) ?>">
                         <div class="top-content">
                             <h2>
                                 <?= h($book->title) ?>

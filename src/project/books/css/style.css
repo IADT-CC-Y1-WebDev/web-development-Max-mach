@@ -204,3 +204,14 @@ form {
   width: 200px;
   margin: 0 auto;
 }
+.error-summary {
+  background-color: #ed4337;
+  width: 400px;
+  border-radius: 5px;
+}
+.error-summary ul {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-top: 10px;
+}

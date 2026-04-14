@@ -64,9 +64,9 @@ function onSubmitForm(e) {
   let year_date = new Date().getFullYear();
   console.log(year_date);
 
-  const stringCheck = /^[A-Za-z. ]+$/;
+  const stringCheck = /^[A-Za-z ,.'\-&]+$/;
   const isbnCheck = /^\d[\d-]{11,}\d$/;
-  const descCheck = /^[A-Za-z0-9\s.,'"\-!?()]{10,300}$/;
+  const descCheck = /^[A-Za-z0-9\s.,'"\-!?,()]{10,300}$/;
 
   let title = nameInput.value.trim();
 
@@ -74,8 +74,8 @@ function onSubmitForm(e) {
     addError("name", "Title is required");
   } else if (!stringCheck.test(title)) {
     addError("name", "Title can contain only letter and spaces");
-  } else if (title.length <= 5) {
-    addError("name", "The title must be at least 5 characters long");
+  } else if (title.length <= 3) {
+    addError("name", "The title must be at least 3 characters long");
   }
 
   let author = authorInput.value.trim();
@@ -86,6 +86,7 @@ function onSubmitForm(e) {
   } else if (author.length <= 5) {
     addError("author", "The author must be at least 5 characters long");
   }
+  console.log(imgInput.value);
 
   let year = yearInput.value.trim();
   if (year == "") {
@@ -116,9 +117,14 @@ function onSubmitForm(e) {
     addError("isbn", "Isbn can contain only 13 numbers");
   }
   let img = imgInput.value.trim();
-  if (img === "") {
-    addError("img", "Img is required");
+
+  console.log(img);
+  if (!imgInput.dataset.optional) {
+    if (img === null || img === "") {
+      addError("img", "Img is required");
+    }
   }
+
   let description = descriptionInput.value.trim();
   if (description == "") {
     addError("description", "Description is required");

@@ -133,7 +133,7 @@ try {
     // =========================================================================
     // TODO: On successful registration, set a success flash message and 
     // redirect back to the form
-    setFlashMessage('success', 'Form validated successfully!');
+    setFlashMessage('success', 'Book create successfully!');
     redirect("book_list.php");
 } catch (Exception $e) {
     // =========================================================================

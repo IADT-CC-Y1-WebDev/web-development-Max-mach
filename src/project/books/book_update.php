@@ -29,7 +29,7 @@ try {
         'description' => $_POST['description'] ?? null,
         'cover' => $_FILES['cover'] ?? null
     ];
-
+    
     // Define validation rules
     $rules = [
         'title' => 'required|notempty|min:1|max:255',
@@ -39,7 +39,7 @@ try {
         'isbn' => 'required|notempty|min:13|max:13',
         'format_ids' => 'required|notempty|array|min:1|max:4',
         'description' => 'required|notempty|min:10',
-        'cover' => 'required|file|image|mimes:jpg,jpeg,png|max_file_size:5242880'
+        'cover' => 'file|image|mimes:jpg,jpeg,png|max_file_size:5242880'
     ];
 
     // Validate all data (including file)
@@ -53,7 +53,7 @@ try {
 
         throw new Exception('Validation failed.');
     }
-
+    
     // Find existing game
     $book = Book::findById($data['id']);
     if (!$book) {
@@ -64,11 +64,10 @@ try {
         throw new Exception('Selected genre does not exist.');
     }
     foreach ($data['format_ids'] as $formatId) {
-        if (!Publisher::findById($formatId)) {
+        if (!Formats::findById($formatId)) {
             throw new Exception('One or more selected platforms do not exist.');
         }
     }
-    $imageFilename = null;
     $uploader = new ImageUpload();
     if ($uploader->hasFile('cover')) {
         // Delete old image

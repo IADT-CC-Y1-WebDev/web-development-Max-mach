@@ -44,7 +44,13 @@ function getFilters() {
   const titleEl = form.elements["title_filter"];
   const yearEl = form.elements["sort_by"];
   const publisherEl = form.elements["sort_publisher"];
-  const formatsEL = form.elements["sort_formats"];
+  const formatsEL = form.querySelectorAll('input[name="formats[]"]:checked');
+  // const formatsEL = form.elements["formats[0]"];
+  // const formats = Array.from(form.elements["formats[]"])
+  //   .filter((cb) => cb.checked)
+  //   .map((cb) => cb.value);
+  const selectedFormats = Array.from(formatsEL).map((f) => f.defaultValue);
+  console.log(selectedFormats);
 
   let titleFilter = (titleEl.value || "").trim().toLowerCase();
   let yearFilter = yearEl.value || "all";
@@ -52,10 +58,10 @@ function getFilters() {
   let formatsFilter = formatsEL.value || "all_formats";
 
   return {
-    titleFilter: titleFilter,
-    yearFilter: yearFilter,
-    publisherFilter: publisherFilter,
-    formatsFilter: formatsFilter,
+    titleFilter,
+    yearFilter,
+    publisherFilter,
+    formatsFilter: selectedFormats,
   };
 }
 function clearFilters() {
@@ -82,9 +88,18 @@ function cardMatches(card, filter) {
   let matchPublisher =
     filter.publisherFilter === "all_publisher" ||
     publisher.includes(filter.publisherFilter);
-  let matchFormats =
-    filter.formatsFilter === "all_formats" ||
-    formats.includes(filter.formatsFilter);
+
+  let matchFormats = filter.formatsFilter.some((f) => {
+    return formats.includes(f);
+  });
+
+  console.log(formats);
+  console.log(matchFormats);
+
+  // let matchFormats =
+  //   filter.formatsFilter === "all_formats" ||
+  //   formats.includes(filter.formatsFilter);
+
   if (filter.yearFilter === "all") {
     yearMatch = year;
   }
@@ -94,5 +109,6 @@ function cardMatches(card, filter) {
   if (filter.yearFilter === "later") {
     yearMatch = year >= 2000;
   }
+
   return matchTitle && yearMatch && matchPublisher && matchFormats;
 }

@@ -229,7 +229,7 @@ $formats = Formats::findAll();
                 <div class=" form-group">
                     <label for="cover">Book Cover Image (max 2MB):</label>
                     <!-- NOTE: File inputs cannot be repopulated for security reasons -->
-                    <input type="file" id="cover" name="cover" accept="image/*">
+                    <input data-optional="true" type="file" id="cover" name="cover" accept="image/*">
 
                     <!-- TODO: Display error message if cover validation fails       -->
                     <?php if (error('cover')): ?>
