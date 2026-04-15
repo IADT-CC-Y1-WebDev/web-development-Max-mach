@@ -22,9 +22,11 @@ try {
     <div class="container">
         <div class="width-12 header">
             <?php require 'php/inc/flash_message.php'; ?>
-            <a href="book_create.php"><div class="button">
-                Add New Book
-            </div></a>
+            <a href="book_create.php">
+                <div class="button">
+                    Add New Book
+                </div>
+            </a>
         </div>
         <?php if (!empty($books)) { ?>
             <div class="width-12 filters">
@@ -57,18 +59,14 @@ try {
 
 
 
-                    <div >
-                         <?php foreach ($formats as $format) { ?>
-                      <input 
-                        type="checkbox"
-                        id="format_<?= $format->id ?>"
-                        name="formats[]"
-                        value="<?= $format->id ?>"
-                        />
+                    <div>
+                        <?php foreach ($formats as $format) { ?>
+                            <input type="checkbox" id="format_<?= $format->id ?>" name="formats[]" value="<?= $format->id ?>"
+                                checked />
 
-                        <label for="format_<?= $format->id ?>">
-                         <?= $format->name ?>
-                        </label>
+                            <label for="format_<?= $format->id ?>">
+                                <?= $format->name ?>
+                            </label>
                         <?php } ?>
                     </div>
 
@@ -96,13 +94,15 @@ try {
             <div id="book-cards" class="width-12 cards">
                 <?php foreach ($books as $book) { ?>
                     <?php $formates = Formats::findByBook($book->id);
-                    $formatNames = [];
+                    $formatID = [];
+                    $formatName = [];
                     foreach ($formates as $format) {
-                        $formatNames[] = $format->id;
+                        $formatID[] = $format->id;
+                        $formatName[] = $format->name;
                     } ?>
                     <div class="card" data-title="<?= htmlspecialchars($book->title) ?>" data-year="<?= $book->year ?>"
                         data-publisher="
-                        <?= $book->publisher_id ?>" data-formats="<?= implode(', ', $formatNames) ?>">
+                        <?= $book->publisher_id ?>" data-formats="<?= implode(', ', $formatID) ?>">
                         <div class="top-content">
                             <h2>
                                 <?= h($book->title) ?>
@@ -115,11 +115,13 @@ try {
                             </p>
                             <p></p>
                             <p>Year:
-                                <!-- <?= h($book->year) ?> -->
                                 <?= (int) $book->year ?>
                             </p>
                             <p>Description:
                                 <?= h($book->description) ?>
+                            </p>
+                            <p>Formats:
+                                <?= implode(', ', $formatName) ?>
                             </p>
                         </div>
                         <div class="bottom-content">

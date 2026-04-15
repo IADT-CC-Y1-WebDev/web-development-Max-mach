@@ -65,7 +65,6 @@ function onSubmitForm(e) {
   console.log(year_date);
 
   const stringCheck = /^[A-Za-z ,.'\-&]+$/;
-  const isbnCheck = /^\d[\d-]{11,}\d$/;
   const descCheck = /^[A-Za-z0-9\s.,'"\-!?,()]{10,300}$/;
 
   let title = nameInput.value.trim();
@@ -111,9 +110,10 @@ function onSubmitForm(e) {
     addError("platform", "Platform is required");
   }
   let isbn = isbnInput.value.trim();
+  const isbnCheck = isbn.replace(/\D/g, "").length;
   if (isbn == "") {
     addError("isbn", "Isbn is required");
-  } else if (!isbnCheck.test(isbn)) {
+  } else if (isbnCheck > 13 || isbnCheck < 13) {
     addError("isbn", "Isbn can contain only 13 numbers");
   }
   let img = imgInput.value.trim();

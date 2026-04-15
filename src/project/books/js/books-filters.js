@@ -45,10 +45,7 @@ function getFilters() {
   const yearEl = form.elements["sort_by"];
   const publisherEl = form.elements["sort_publisher"];
   const formatsEL = form.querySelectorAll('input[name="formats[]"]:checked');
-  // const formatsEL = form.elements["formats[0]"];
-  // const formats = Array.from(form.elements["formats[]"])
-  //   .filter((cb) => cb.checked)
-  //   .map((cb) => cb.value);
+
   const selectedFormats = Array.from(formatsEL).map((f) => f.defaultValue);
   console.log(selectedFormats);
 
@@ -92,13 +89,6 @@ function cardMatches(card, filter) {
   let matchFormats = filter.formatsFilter.some((f) => {
     return formats.includes(f);
   });
-
-  console.log(formats);
-  console.log(matchFormats);
-
-  // let matchFormats =
-  //   filter.formatsFilter === "all_formats" ||
-  //   formats.includes(filter.formatsFilter);
 
   if (filter.yearFilter === "all") {
     yearMatch = year;
