@@ -113,8 +113,8 @@ function onSubmitForm(e) {
   const isbnCheck = isbn.replace(/\D/g, "").length;
   if (isbn == "") {
     addError("isbn", "Isbn is required");
-  } else if (isbnCheck > 13 || isbnCheck < 13) {
-    addError("isbn", "Isbn can contain only 13 numbers");
+  } else if (isbnCheck !== 13) {
+    addError("isbn", "Isbn must contain only 13 numbers");
   }
   let img = imgInput.value.trim();
 

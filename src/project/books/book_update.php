@@ -18,18 +18,21 @@ try {
     }
 
     // Get form data
+     $isbn = $_POST['isbn'];
+     $isbnCheck =  preg_replace('/\D/', '', $isbn);
     $data = [
         'id' => $_POST['id'] ?? null,
         'title' => $_POST['title'] ?? null,
         'author' => $_POST['author'] ?? null,
         'publisher_id' => $_POST['publisher_id'] ?? null,
         'year' => $_POST['year'] ?? null,
-        'isbn' => $_POST['isbn'] ?? null,
+        'isbn' => $isbnCheck ?? null,
         'format_ids' => $_POST['format_ids'] ?? [],
         'description' => $_POST['description'] ?? null,
         'cover' => $_FILES['cover'] ?? null
     ];
-    
+   
+   
     // Define validation rules
     $rules = [
         'title' => 'required|notempty|min:1|max:255',
