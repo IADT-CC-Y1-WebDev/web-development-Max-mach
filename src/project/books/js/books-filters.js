@@ -47,7 +47,6 @@ function getFilters() {
   const formatsEL = form.querySelectorAll('input[name="formats[]"]:checked');
 
   const selectedFormats = Array.from(formatsEL).map((f) => f.defaultValue);
-  console.log(selectedFormats);
 
   let titleFilter = (titleEl.value || "").trim().toLowerCase();
   let yearFilter = yearEl.value || "all";

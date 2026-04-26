@@ -59,10 +59,8 @@ function showErrorSummaryTop() {
 function onSubmitForm(e) {
   e.preventDefault();
   errors = {};
-  console.log(nameInput.value);
 
   let year_date = new Date().getFullYear();
-  console.log(year_date);
 
   const stringCheck = /^[A-Za-z ,.'\-&]+$/;
   const descCheck = /^[A-Za-z0-9\s.,'"\-!?,()]{10,300}$/;
@@ -85,7 +83,6 @@ function onSubmitForm(e) {
   } else if (author.length <= 5) {
     addError("author", "The author must be at least 5 characters long");
   }
-  console.log(imgInput.value);
 
   let year = yearInput.value.trim();
   if (year == "") {
@@ -118,7 +115,6 @@ function onSubmitForm(e) {
   }
   let img = imgInput.value.trim();
 
-  console.log(img);
   if (!imgInput.dataset.optional) {
     if (img === null || img === "") {
       addError("img", "Img is required");
@@ -135,7 +131,6 @@ function onSubmitForm(e) {
     );
   }
 
-  console.log(title.length);
   showErrorSummaryTop();
   if (Object.keys(errors).length === 0) {
     commentForm.submit();
